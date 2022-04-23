@@ -69,7 +69,44 @@ public class Login {
              
      
        }
-        
+        else if (table.equalsIgnoreCase("Staff")){
+         try{
+                    PreparedStatement stmt=con.prepareStatement("Select password, role from STAFF where EMAIL=?");
+
+                                    
+                                    stmt.setString(1,email);
+                                    ResultSet rset=stmt.executeQuery();
+
+                    System.out.println("query executed");
+                    while(rset.next()){
+                        System.out.println("!@#$%^&*Admin12345678");
+                             pass =rset.getString("password");
+                             role = rset.getString("role");
+                    }
+                    if(pass.isEmpty()){
+                     JOptionPane.showMessageDialog(null, "Email not present in dataset");
+
+                    }
+                    else if(!(pass.trim().equalsIgnoreCase(passwor.trim()))){
+                        JOptionPane.showMessageDialog(null, "Incorrect Password");
+                    }
+                    else
+                    {JOptionPane.showMessageDialog(null, "Login Successfull");
+                        System.out.println(role);
+                    Counter = role; 
+                    }
+
+                    stmt.close();
+                    con.close();
+
+
+                } 
+                catch (SQLException e1) {
+                        JOptionPane.showMessageDialog( null, "Some Error Occured.Login Unsucccessfull. Please Try After Sometime.");
+                    }
+             
+     
+        }
         
      return Counter;
         }

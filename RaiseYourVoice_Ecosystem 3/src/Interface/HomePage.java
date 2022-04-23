@@ -130,7 +130,7 @@ import java.awt.Toolkit;
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new HomePage().setVisible();
+                new HomePage().setVisible(true);
                 
             }
         });

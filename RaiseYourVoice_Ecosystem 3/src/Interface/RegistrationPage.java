@@ -26,7 +26,43 @@ public class RegistrationPage extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        
+        jPanel1 = new javax.swing.JPanel();
+        btnStaffReg = new javax.swing.JButton();
+        btnVictimReg = new javax.swing.JButton();
+        jTabbedPane1 = new javax.swing.JTabbedPane();
+        jPanel2 = new javax.swing.JPanel();
+        jLabel6 = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
+        jLabel8 = new javax.swing.JLabel();
+        jLabel9 = new javax.swing.JLabel();
+        objPFpassword1 = new javax.swing.JPasswordField();
+        objTFEmail1 = new javax.swing.JTextField();
+        objTFCNo1 = new javax.swing.JTextField();
+        objTFName1 = new javax.swing.JTextField();
+        jLabel10 = new javax.swing.JLabel();
+        objTFPetName1 = new javax.swing.JTextField();
+        jLabel11 = new javax.swing.JLabel();
+        jComboBox1 = new javax.swing.JComboBox<>();
+        jLabel12 = new javax.swing.JLabel();
+        jLabel13 = new javax.swing.JLabel();
+        jComboBox2 = new javax.swing.JComboBox<>();
+        jComboBox3 = new javax.swing.JComboBox<>();
+        jPanel3 = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        objTFEmail = new javax.swing.JTextField();
+        objTFName = new javax.swing.JTextField();
+        objTFCNo = new javax.swing.JTextField();
+        objTFPetName = new javax.swing.JTextField();
+        objPFpassword = new javax.swing.JPasswordField();
+
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jPanel1.setBackground(new java.awt.Color(204, 255, 255));
 
         btnStaffReg.setFont(new java.awt.Font("Tahoma", 3, 18)); // NOI18N
         btnStaffReg.setText("REGISTER AS STAFF");
@@ -245,7 +281,27 @@ public class RegistrationPage extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-  
+    private void btnVictimRegActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVictimRegActionPerformed
+        // TODO add your handling code here:
+        jTabbedPane1.setSelectedIndex(1);
+    }//GEN-LAST:event_btnVictimRegActionPerformed
+
+    private void objPFpasswordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_objPFpasswordActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_objPFpasswordActionPerformed
+
+    private void objPFpassword1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_objPFpassword1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_objPFpassword1ActionPerformed
+
+    private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jComboBox1ActionPerformed
+
+    private void btnStaffRegActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnStaffRegActionPerformed
+        // TODO add your handling code here:
+        jTabbedPane1.setSelectedIndex(0);
+    }//GEN-LAST:event_btnStaffRegActionPerformed
 
     /**
      * @param args the command line arguments

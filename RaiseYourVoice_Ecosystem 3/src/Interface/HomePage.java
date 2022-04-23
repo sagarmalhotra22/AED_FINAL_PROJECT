@@ -20,6 +20,7 @@ import java.awt.Toolkit;
     
     public HomePage() {
         initComponents();
+       setSize(screenSize.width, screenSize.height);
        
     }
 

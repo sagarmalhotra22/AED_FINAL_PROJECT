@@ -166,7 +166,88 @@ class MainLoginForm extends javax.swing.JFrame {
     private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginActionPerformed
         // TODO add your handling code here:
           //new HospitalAdmin().setVisible(true);
-       
+           try
+        {   System.out.println(txtFEmail.getText()+String.valueOf(passFLogin.getPassword())+"000000000000000000000");
+          
+            if(txtFEmail.getText().equalsIgnoreCase("Enter Email..."))
+            {
+                 throw new Exception("Add Email"); 
+            }
+            else if(String.valueOf(passFLogin.getPassword()).equalsIgnoreCase("jPasswordField1")){
+                     throw new Exception("Add password"); 
+             }
+            else if(jComboBox1.getSelectedItem().toString()=="Select"){
+                     throw new Exception("Select User"); 
+             }
+            
+            else{  login = new Login();
+                    Counter =  login.UserLogin(txtFEmail.getText(), String.valueOf(passFLogin.getPassword()),jComboBox1.getSelectedItem().toString());
+                    System.out.println("Admin12345678");
+                      if(Counter.equalsIgnoreCase("Manager")){
+                           email=txtFEmail.getText();
+                           password= String.valueOf(passFLogin.getPassword());
+                        new HospitalAdmin(email,password).setVisible(true);
+                       }
+
+                       else if(Counter.equalsIgnoreCase("Victim")){
+                           email=txtFEmail.getText();
+                           password= String.valueOf(passFLogin.getPassword());
+                          new VictimReporting(email,password).setVisible(true);
+                       }
+                       else if(Counter.equalsIgnoreCase("Admin")){
+                           
+                            email=txtFEmail.getText();
+                           password= String.valueOf(passFLogin.getPassword());
+                          new Admin(email,password).setVisible(true);
+                       }
+                        else if(Counter.equalsIgnoreCase("Counselor")){
+                              email=txtFEmail.getText();
+                           password= String.valueOf(passFLogin.getPassword());
+                          new HospitalCounselor(email,password).setVisible(true);
+                       }
+                        else if(Counter.equalsIgnoreCase("Superintendent")){
+                               email=txtFEmail.getText();
+                           password= String.valueOf(passFLogin.getPassword());
+                          new InvestigationAgencyManagement(email,password).setVisible(true);
+                       }
+                        else if(Counter.equalsIgnoreCase("Investigator")){
+                             email=txtFEmail.getText();
+                           password= String.valueOf(passFLogin.getPassword());
+                          new InvestigationDepartment(email,password).setVisible(true);
+                       }
+                      
+                       else if(Counter.equalsIgnoreCase("Collector")){
+                             email=txtFEmail.getText();
+                           password= String.valueOf(passFLogin.getPassword());
+                          new SampleCollector(email,password).setVisible(true);
+                       }
+                       
+                       else if(Counter.equalsIgnoreCase("Assistant")){
+                           email=txtFEmail.getText();
+                           password= String.valueOf(passFLogin.getPassword());
+                          new HospitalTestReport(email,password).setVisible(true);
+                       }
+                       
+                       
+                       else if(Counter.equalsIgnoreCase("Lawyer")){
+                             email=txtFEmail.getText();
+                           password= String.valueOf(passFLogin.getPassword());
+                          new LawyerPortal(email,password).setVisible(true);
+                       }
+                       else if(Counter.equalsIgnoreCase("Judge")){
+
+                            email=txtFEmail.getText();
+                           password= String.valueOf(passFLogin.getPassword());
+                          new JudgePortal(email,password).setVisible(true);
+                   }
+                    
+
+        }}
+          catch(Exception e)
+        {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(this,e.getMessage());
+        } 
           
     }//GEN-LAST:event_btnLoginActionPerformed
 

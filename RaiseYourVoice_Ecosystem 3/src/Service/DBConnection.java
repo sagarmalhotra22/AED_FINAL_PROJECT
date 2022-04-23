@@ -18,9 +18,9 @@ public class DBConnection {
 		OracleDataSource ods;
 		try{
 			ods=new OracleDataSource();
-			ods.setURL("");
+			ods.setURL("jdbc:oracle:thin:hr/hr@localhost:1521:orcl");
                         
-			con=ods.getConnection("");
+			con=ods.getConnection("C##aed","Aed12345");
 		}
 		catch(SQLException e){
                     System.out.println("Service.DBConnection.getDbcon()");

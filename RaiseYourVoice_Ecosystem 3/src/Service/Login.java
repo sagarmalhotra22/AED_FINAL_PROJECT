@@ -32,7 +32,47 @@ public class Login {
         DBConnection DBcon = new DBConnection();
         System.out.println("-------------Logging In-------------");
         Connection con= DBcon.getDbcon();
+        if(table.equalsIgnoreCase("Victim")){
+                try{
+                    PreparedStatement stmt=con.prepareStatement("Select password from VICTIM where EMAIL=?");
+
+                               
+                                    stmt.setString(1,email);
+                                    System.out.println("-------------Logging In2------------");
+                                    ResultSet rset=stmt.executeQuery();
+
+                    System.out.println("query executed");
+                    while(rset.next()){
+                             pass =rset.getString("password");
+                    }
+                     System.out.println(pass);
+                    if(pass.isEmpty()){
+                     JOptionPane.showMessageDialog(null, "Email not present in dataset");
+
+                    }
+                    else if(!(pass.trim().equalsIgnoreCase(passwor.trim()))){
+                        JOptionPane.showMessageDialog(null, "Incorrect Password");
+                    }
+                    else
+                    {JOptionPane.showMessageDialog(null, "Login Successfull");
+                    Counter = "VICTIM";
+                    }
+
+                    stmt.close();
+                    con.close();
+
+
+                } 
+                catch (SQLException e1) {
+                        JOptionPane.showMessageDialog( null, "Some Error Occured.Login Unsucccessfull. Please Try After Sometime.");
+                    }
+             
+     
        }
+        
+        
+     return Counter;
+        }
      
     }
   

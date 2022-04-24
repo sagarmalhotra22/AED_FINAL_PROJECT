@@ -442,12 +442,160 @@ public class VictimReporting extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    public Boolean victimConsent(String requestId, String consent)
+    {
+        if(requestId==null)
+            return null;
+        
+        DBConnection DBcon = new DBConnection();
+        System.out.println("-------------Logging In-------------");
+        Connection con= DBcon.getDbcon();
+        String query = "UPDATE " + Constants.investigationTableName + " SET Status=? WHERE Request_Id=?";
+        if(query.isBlank() || query.isEmpty())
+            return null;
+        
+        try{
+            PreparedStatement s = con.prepareStatement(query);
+            s.setString(1, consent);
+            s.setString(2, requestId);
+            System.out.println("-------------Updating Request Status in " + Constants.investigationTableName + "------------");
+            Integer r = s.executeUpdate();
+            System.out.println("-------------Query Executed------------");
+            if(r == null)
+            {
+                JOptionPane.showMessageDialog( null, "Some error occured. Status update unsucccessfull. Please try after sometime.");
+            }
+            s.close();
+            con.close();
+            return true;
+        }
+        catch (SQLException e1)
+        {
+            JOptionPane.showMessageDialog( null, "Some error occured. Status update unsucccessfull. Please try after sometime.");
+        }
+        return null;
+    }
+    
+    private void btnSubmitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSubmitActionPerformed
+        // TODO add your handling code here:
+        //new HospitalAdmin().setVisible(true);
+            try
+        {   
+          
+            if(jTextArea1.getText().isEmpty()){
+                     throw new Exception("Add crime description"); 
+             }
+            else if(TFCrimeLoc.getText().isEmpty())
+            {
+                 throw new Exception("Add crime location"); 
+            }
+            else if(String.valueOf(jDateChooser1.getDate()).isEmpty()){
+                     throw new Exception("Select crime date"); 
+             }
+            
+            else{  invRequest = new InvestigationRequest(); 
+                    invRequest.setVictim_email(vicEmail);
+                    invRequest.setCulprit_Name(TFCulpritName.getText());
+                    invRequest.setCrime_Description(jTextArea1.getText());
+                    invRequest.setCrime_Location(TFCrimeLoc.getText());
+                    invRequest.setCrime_Date(String.valueOf(jDateChooser1.getDate()));
+                    invRequest.setCulprit_Image(String.valueOf(jFileChooser1.getName()));
+                    invRequest.setDepartment("Head Department");
+                    invRequest.setAssigned_To(" ");
+                    invRequest.setStatus("Submitted");
+                    invRequest.setRequest_Date("5/2/2022");
+                    invRequest.setNotes(" ");
+                    invRequest.setUpdate_Date(" ");
+                    invRequest.setTest_Assigne(" ");
+                reqInv = new RequestInvestigation();
+                reqInv.ReqInvestigation(invRequest);
+                    //JOptionPane.showMessageDialog(null,"Request raised");
+                   }
+                    
+
+        }
+          catch(Exception e)
+        {
+          
+            JOptionPane.showMessageDialog(this,e.getMessage());
+        } 
     }//GEN-LAST:event_btnSubmitActionPerformed
 
     private void btnSubmitMedicalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSubmitMedicalActionPerformed
         // TODO add your handling code here:
             try
+        {   
+          
+            if(jTextArea2.getText().isEmpty()){
+                     throw new Exception("Add problem description"); 
+             }
+            else if(String.valueOf(CBService.getSelectedItem())=="Select")
+            {
+                 throw new Exception("Select service"); 
+            }
+            else if(String.valueOf(CBGender.getSelectedItem())=="Select"){
+                     throw new Exception("Select gender"); 
+             }
+            else if(TFAge.getText().isEmpty()){
+                     throw new Exception("Add age"); 
+             }
+            else{  medReq = new MedicalRequest(); 
+                    medReq.setVictim_email(vicEmail);
+                    medReq.setProblem_Description(jTextArea2.getText());
+                    medReq.setService(String.valueOf(CBService.getSelectedItem()));
+                     medReq.setGender(String.valueOf(CBGender.getSelectedItem()));
+                  medReq.setDepartment(" ");
+                    medReq.setAssigned_To(" ");
+                    medReq.setStatus("Submitted");
+                    medReq.setRequest_Date("5/2/2022");
+                    medReq.setNotes(" ");
+                    medReq.setUpdate_Date(" ");
+                reqMed = new RequestMedical(medReq);
+                
+                   // JOptionPane.showMessageDialog(null,"Request raised");
+                    
+                   }
+                    
+
+        }
+          catch(Exception e)
+        {
+          e.printStackTrace();
+            JOptionPane.showMessageDialog(this,e.getMessage());
+        } 
+    }//GEN-LAST:event_btnSubmitMedicalActionPerformed
+
+    private void btnInvestigationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInvestigationActionPerformed
+        // TODO add your handling code here:
+        jTabbedPane.setSelectedIndex(1);
+    }//GEN-LAST:event_btnInvestigationActionPerformed
+
+    private void btnStatusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnStatusActionPerformed
+        // TODO add your handling code here:
+         populateMedicalTable();
+         populateInvestigatioTable();
+           jTabbedPane.setSelectedIndex(3);
        
+    }//GEN-LAST:event_btnStatusActionPerformed
+
+    private void TFCrimeLocActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TFCrimeLocActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_TFCrimeLocActionPerformed
+
+    private void lblCloseLogin1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblCloseLogin1MouseClicked
+        // TODO add your handling code here:
+        this.dispose();
+    }//GEN-LAST:event_lblCloseLogin1MouseClicked
+
+    private void lblLogoutMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblLogoutMouseClicked
+        // TODO add your handling code here:
+        JOptionPane.showMessageDialog(null,"Successfully Logout");
+        new HomePage().setVisible(true);
+    }//GEN-LAST:event_lblLogoutMouseClicked
+
+    private void btnMedFacilityActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMedFacilityActionPerformed
+        // TODO add your handling code here:
+         jTabbedPane.setSelectedIndex(2);
     }//GEN-LAST:event_btnMedFacilityActionPerformed
 
     private void btnProvideConsentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProvideConsentActionPerformed

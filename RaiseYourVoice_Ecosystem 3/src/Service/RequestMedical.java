@@ -24,7 +24,19 @@ public class RequestMedical {
 	Connection con= DBcon.getDbcon();
 	try{
 	
-	
+	PreparedStatement stmt=con.prepareStatement("Insert into  Medical_Request(Victim_email,Problem_Description,Service,Gender,Department,Assigned_To,Status,Notes,Request_Date,Update_Date) Values(?,?,?,?,?,?,?,?,?,?)");
+    
+	                stmt.setString(1,medReq.getVictim_email());
+                        stmt.setString(2,medReq.getProblem_Description());
+                        stmt.setString(3, medReq.getService());
+                        stmt.setString(4,medReq.getGender());
+                        stmt.setString(5,medReq.getDepartment());
+                        stmt.setString(6,medReq.getAssigned_To());
+                        stmt.setString(7,medReq.getStatus());
+                        stmt.setString(8,medReq.getNotes());
+                        stmt.setString(9,medReq.getRequest_Date());
+                        stmt.setString(10,medReq.getUpdate_Date());
+                        stmt.executeQuery();
         JOptionPane.showMessageDialog( null, " Request raised sucessfully for "+medReq.getVictim_email());
 	System.out.println("-------------Request raised sucessfully------------------");
         stmt.close();

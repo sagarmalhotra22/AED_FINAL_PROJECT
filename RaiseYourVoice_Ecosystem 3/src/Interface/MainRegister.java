@@ -409,7 +409,99 @@ public class MainRegister extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_CBTabStaffRoleActionPerformed
 
-    
+    private void btnTabStaffRegActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTabStaffRegActionPerformed
+        // TODO add your handling code here:
+       try
+        {
+          
+            if(objTFName1.getText().isEmpty())
+            {
+                 throw new Exception("Add name"); 
+            }
+            else if(objTFCNo1.getText().isEmpty()){
+                     throw new Exception("Add contact number");
+            }
+            else if(objTFEmail1.getText().isEmpty()){
+                     throw new Exception("Add email"); 
+            }
+            else if(objPFpassword2.getPassword().toString().isEmpty()){
+                     throw new Exception("Add password"); 
+             }
+            else if(CBTabStaffCity.getSelectedItem().toString()=="Select"){
+                     throw new Exception("Select City"); 
+             }
+            else if(CBTabStaffEnt.getSelectedItem().toString()=="Select"){
+                     throw new Exception("Select Enterprise"); 
+             }
+            else if(CBTabStaffDept.getSelectedItem().toString()=="Select"){
+                     throw new Exception("Select Department"); 
+             }
+            else if(CBTabStaffRole.getSelectedItem().toString()=="Select"){
+                     throw new Exception("Select Role"); 
+             }
+            else if(objTFPetName1.getText().isEmpty()){
+                     throw new Exception("Add pet name in security question"); 
+            }
+            else{ 
+               // Matcher matcher = pattern.matcher(objTFEmail1.getText());  
+             
+                if(!(objTFName1.getText().matches("^[a-zA-Z]*$"))){
+                 throw new Exception("Name can contain characters only"); 
+                }
+                
+                else if(!(objTFCNo1.getText().matches("^((?!(0))[0-9]{10})$"))){
+                 throw new Exception("Enter a valid phone number"); 
+                }
+                else if(!(objTFEmail1.getText().matches("^[\\w-_\\.+]*[\\w-_\\.]\\@([\\w]+\\.)+[\\w]+[\\w]$"))){
+                 throw new Exception("Enter a valid email"); 
+                }
+               
+                else if(!(String.valueOf(objPFpassword2.getPassword()).matches("^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\\S+$).{8,}$"))){
+                    System.out.println(String.valueOf(objPFpassword2.getPassword()));
+                 throw new Exception("Enter a valid password. A valid password must contain atleast one lowercase,one  uppercase,one  special and one  digit character.And must be of length between 8-20"); 
+                }
+                else if(!(objTFPetName1.getText().matches("^[a-zA-Z]*$"))){
+                 throw new Exception("Enter a valid pet name"); 
+                }
+                else{
+                staff = new Staff();
+                staff.setName(objTFName1.getText());
+                staff.setContact(Long.parseLong(objTFCNo1.getText()));
+                staff.setEmail(objTFEmail1.getText());
+                staff.setCity(CBTabStaffCity.getSelectedItem().toString());
+                staff.setPassword(String.valueOf(objPFpassword2.getPassword()));
+                staff.setEnterprise(CBTabStaffEnt.getSelectedItem().toString());
+                staff.setDepartment(CBTabStaffDept.getSelectedItem().toString());
+                staff.setRole(CBTabStaffRole.getSelectedItem().toString());
+                staff.setSecurity_question(objTFPetName1.getText());
+                staff.setWorking_Status("");
+                
+                
+                staffreg = new StaffRegistration(staff);
+                
+                objTFName1.setText("");
+                objTFCNo1.setText("");
+                objTFEmail1.setText("");
+                CBTabStaffCity.setSelectedItem("Select");
+                objPFpassword2.setText("");
+                
+                CBTabStaffEnt.setSelectedItem("Select");
+                CBTabStaffDept.removeAllItems();
+                CBTabStaffDept.addItem("Select");
+                CBTabStaffRole.removeAllItems();
+                CBTabStaffRole.addItem("Select");
+                objTFPetName1.setText("");
+                
+                
+                }
+            }
+            
+        }
+          catch(Exception e)
+        {
+          
+            JOptionPane.showMessageDialog(this,e.getMessage());
+        } 
         
     }//GEN-LAST:event_btnTabStaffRegActionPerformed
 
@@ -427,9 +519,163 @@ public class MainRegister extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_btnBackActionPerformed
 
-    
+    private void btnTabVicRegActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTabVicRegActionPerformed
+        // TODO add your handling code here:
+         try
+        {
+          
+            if(objTFName.getText().isEmpty())
+            {
+                 throw new Exception("Add name"); 
+            }
+            else if(objTFCNo.getText().isEmpty()){
+                     throw new Exception("Add contact number");
+            }
+            else if(objTFEmail.getText().isEmpty()){
+                     throw new Exception("Add email"); 
+            }
+            else if(String.valueOf(objPFpassword.getPassword()).isEmpty()){
+                     throw new Exception("Add password"); 
+             }
+            else if(CBTabVictimCity.getSelectedItem().toString()=="Select"){
+                     throw new Exception("Select City"); 
+             }
+            else if(objTFPetName2.getText().isEmpty()){
+                     throw new Exception("Add pet name in security question"); 
+            }
+            else{
+               //   Matcher matcher = pattern.matcher(objTFEmail.getText()); 
+                if(!(objTFName.getText().matches("^[a-zA-Z]*$"))){
+                 throw new Exception("Name can contain characters only"); 
+                }
+                
+                else if(!(objTFCNo.getText().matches("^((?!(0))[0-9]{10})$"))){
+                 throw new Exception("Enter a valid phone number"); 
+                }
+                else if(!(objTFEmail.getText().matches("^[\\w-_\\.+]*[\\w-_\\.]\\@([\\w]+\\.)+[\\w]+[\\w]$"))){
+                 throw new Exception("Enter a valid email"); 
+                }
+                else if(!(String.valueOf(objPFpassword.getPassword()).matches("^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\\S+$).{8,}$"))){
+                                     System.out.println(String.valueOf(objPFpassword.getPassword()));
+
+                 throw new Exception("Enter a valid password, A valid passowrd must contain atleast one lowercase, uppercase, special and digit character.And must be of length between 8-20"); 
+                }
+                else if(!(objTFPetName2.getText().matches("^[a-zA-Z]*$"))){
+                 throw new Exception("Enter a valid pet name"); 
+                }
+                else{
+                vic = new Victim();
+                vic.setName(objTFName.getText());
+                vic.setContact(Long.parseLong(objTFCNo.getText()));
+                vic.setEmail(objTFEmail.getText());
+                vic.setCity(CBTabVictimCity.getSelectedItem().toString());
+                vic.setPassword(String.valueOf(objPFpassword.getPassword()));
+                vic.setSecurity_question(objTFPetName2.getText());
+                
+                vicReg = new VictimRegistration(vic);
+                
+                objTFName.setText("");
+                objTFCNo.setText("");
+                objTFEmail.setText("");
+                CBTabVictimCity.setSelectedItem("Select");
+                objPFpassword.setText("");
+                objTFPetName2.setText("");
+                
+                
+                }
+            }
+            
+        }
+          catch(Exception e)
+        {
+          
+            JOptionPane.showMessageDialog(this,e.getMessage());
+        }
         
     }//GEN-LAST:event_btnTabVicRegActionPerformed
+
+    private void CBTabStaffEntMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_CBTabStaffEntMouseClicked
+        // TODO add your handling code here:
+      
+       
+    }//GEN-LAST:event_CBTabStaffEntMouseClicked
+
+    private void CBTabStaffEntMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_CBTabStaffEntMouseExited
+        // TODO add your handling code here:
+         if(CBTabStaffEnt.getSelectedItem().toString()=="Hospital"){
+             CBTabStaffDept.removeAllItems();
+             CBTabStaffDept.addItem("Select");
+           CBTabStaffDept.addItem("MANAGEMENT");
+           CBTabStaffDept.addItem("COUNSELLING_DEPARTMENT");
+           CBTabStaffDept.addItem("TEST_DEPARTMENT");
+           
+        }
+         else if(CBTabStaffEnt.getSelectedItem().toString()=="Investigation"){
+              CBTabStaffDept.removeAllItems();
+              CBTabStaffDept.addItem("Select");
+           CBTabStaffDept.addItem("HEAD_DEPARTMENT");
+           CBTabStaffDept.addItem("INVESTIGATION_DEPARTMENT");
+           }
+         else if(CBTabStaffEnt.getSelectedItem().toString()=="Justice"){
+              CBTabStaffDept.removeAllItems();
+              CBTabStaffDept.addItem("Select");
+           CBTabStaffDept.addItem("LAWYER_DEPARTMENT");
+           CBTabStaffDept.addItem("JUDGE_DEPARTMENT");
+           }
+         else if(CBTabStaffEnt.getSelectedItem().toString()=="Raise Your Voice") {
+              CBTabStaffDept.removeAllItems();
+              CBTabStaffDept.addItem("Select");
+           CBTabStaffDept.addItem("ADMINISTRATION");
+           }
+         
+    }//GEN-LAST:event_CBTabStaffEntMouseExited
+
+    private void CBTabStaffDeptMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_CBTabStaffDeptMouseExited
+        // TODO add your handling code here:
+        if(CBTabStaffDept.getSelectedItem().toString()=="MANAGEMENT"){
+             CBTabStaffRole.removeAllItems();
+              CBTabStaffRole.addItem("Select");
+           CBTabStaffRole.addItem("Manager");
+           
+        }
+         else if(CBTabStaffDept.getSelectedItem().toString()=="INVESTIGATION_DEPARTMENT"){
+             CBTabStaffRole.removeAllItems();
+              CBTabStaffRole.addItem("Select");
+           CBTabStaffRole.addItem("Investigator");
+           }
+          else if(CBTabStaffDept.getSelectedItem().toString()=="HEAD_DEPARTMENT"){
+             CBTabStaffRole.removeAllItems();
+              CBTabStaffRole.addItem("Select");
+           CBTabStaffRole.addItem("Superintendent");
+           }
+         else if(CBTabStaffDept.getSelectedItem().toString()=="COUNSELLING_DEPARTMENT"){
+             CBTabStaffRole.removeAllItems();
+              CBTabStaffRole.addItem("Select");
+           CBTabStaffRole.addItem("Counsellor");
+           
+           }
+         else if(CBTabStaffDept.getSelectedItem().toString()=="TEST_DEPARTMENT"){
+             CBTabStaffRole.removeAllItems();
+              CBTabStaffRole.addItem("Select");
+           CBTabStaffRole.addItem("Collector");
+           CBTabStaffRole.addItem("Assistant");
+           }
+         else if(CBTabStaffDept.getSelectedItem().toString()=="LAWYER_DEPARTMENT"){
+             CBTabStaffRole.removeAllItems();
+              CBTabStaffRole.addItem("Select");
+           CBTabStaffRole.addItem("Lawyer");
+           }
+         else if(CBTabStaffDept.getSelectedItem().toString()=="JUDGE_DEPARTMENT"){
+             CBTabStaffRole.removeAllItems();
+              CBTabStaffRole.addItem("Select");
+           CBTabStaffRole.addItem("Judge");
+           }
+         else if(CBTabStaffDept.getSelectedItem().toString()=="ADMINISTRATION") {
+             CBTabStaffRole.removeAllItems();
+              CBTabStaffRole.addItem("Select");
+           CBTabStaffRole.addItem("Admin");
+           }
+    }//GEN-LAST:event_CBTabStaffDeptMouseExited
 
     /**
      * @param args the command line arguments

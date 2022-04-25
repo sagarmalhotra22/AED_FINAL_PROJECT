@@ -103,7 +103,34 @@ public class GetPassword extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_lblCloseMouseClicked
 
-   
+    private void btnRecoverPswdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRecoverPswdActionPerformed
+        // TODO add your handling code here: 
+        try
+        {   
+          
+            if(TFEmail.getText().isEmpty())
+            {
+                 throw new Exception("Add Email"); 
+            }
+            else if(TFPetName.getText().isEmpty()){
+                     throw new Exception("Add pet name"); 
+             }
+            else if(CBRole.getSelectedItem().toString()=="Select"){
+                     throw new Exception("Select User"); 
+             }
+            
+            else{   recoverPass = new RecoverPassword();
+           pass = recoverPass.ReturnPassword(TFEmail.getText(), TFPetName.getText(), CBRole.getSelectedItem().toString());
+                    JOptionPane.showMessageDialog(null,"Your passwors is - "+pass);
+                   }
+                    
+
+        }
+          catch(Exception e)
+        {
+          
+            JOptionPane.showMessageDialog(this,e.getMessage());
+        } 
           
        
     }//GEN-LAST:event_btnRecoverPswdActionPerformed

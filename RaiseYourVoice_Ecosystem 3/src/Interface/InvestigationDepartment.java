@@ -232,7 +232,52 @@ public String Ipass;
         return;
     }//GEN-LAST:event_caseResportBtnActionPerformed
 
-  
+    private void rejectCaseBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rejectCaseBtnActionPerformed
+                
+        //enter comments to reject
+        String c = JOptionPane.showInputDialog(this, "Enter Reason for Rejection");
+        
+        //send rejection comment to Investigation Agency Management
+    }//GEN-LAST:event_rejectCaseBtnActionPerformed
+
+    private void investigationDataTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_investigationDataTableMouseClicked
+        
+        DefaultTableModel model = (DefaultTableModel) investigationDataTable.getModel();
+        int selectedRowIndex = investigationDataTable.getSelectedRow();
+        
+        if(selectedRowIndex < 0 ){
+            JOptionPane.showMessageDialog(this, "Please select a row to view");
+            return;
+        }
+        /*
+        on selection check status and display relevant buttons
+        assignToHospitalBtn.setVisible(true);
+        assignToInvestigationBtn.setVisible(true);
+        assignToLawBtn.setVisible(true);
+        */        // TODO add your handling code here:
+    }//GEN-LAST:event_investigationDataTableMouseClicked
+
+    private void statusFilterByItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_statusFilterByItemStateChanged
+        if(evt.getStateChange() == ItemEvent.SELECTED) 
+        {
+            String selectedItem = statusFilterBy.getSelectedItem().toString();
+            switch(selectedItem)
+            {
+                case "Unsolved Cases":
+                    populateTable();
+                    break;
+                case "Solved Cases":
+                    populateTable();
+                    break;
+            }
+        }
+    }//GEN-LAST:event_statusFilterByItemStateChanged
+
+    private void lblCloseAdminMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblCloseAdminMouseClicked
+        // TODO add your handling code here:
+        this.dispose();
+    }//GEN-LAST:event_lblCloseAdminMouseClicked
+
     private void lblAdminLogoutMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblAdminLogoutMouseClicked
         // TODO add your handling code here:
         JOptionPane.showMessageDialog(null,"Successfully Logout");
@@ -322,3 +367,4 @@ public String Ipass;
         }
     }
 }
+

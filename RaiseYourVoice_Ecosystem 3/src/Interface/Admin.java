@@ -32,7 +32,12 @@ public class Admin extends javax.swing.JFrame {
 //        btnAdminReject.setVisible(true);
 //    }
 
-  
+    Admin(String email, String password) {
+        initComponents();
+        btnAssign.setVisible(true);
+        btnAdminAccept.setVisible(true);
+        btnAdminReject.setVisible(true);
+         }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -267,7 +272,35 @@ public class Admin extends javax.swing.JFrame {
         */
     }//GEN-LAST:event_tblAdminPopulateDataMouseClicked
 
-   
+    private void btnAdminAcceptActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdminAcceptActionPerformed
+        
+        //accept request and send to counselling or investigation department
+        DefaultTableModel model = (DefaultTableModel) tblAdminPopulateData.getModel();
+        int selectedRowIndex = tblAdminPopulateData.getSelectedRow();
+        
+        if(selectedRowIndex < 0 )
+        {
+            JOptionPane.showMessageDialog(this, "Please select a row to view");
+            return;
+        }
+        String requestId = String.valueOf(model.getValueAt(selectedRowIndex, 0));
+        String enterprise = String.valueOf(CBAdmin.getSelectedItem());
+        Boolean response = false;
+        AdminService adminService = new AdminService();
+        
+        switch(enterprise)
+        {
+            case "Hospital Enterprise":
+                response = adminService.assignCaseToHospital(requestId);
+                break;
+            case "Investigation Enterprise":
+                response = adminService.assignCaseToInvestigation(requestId);
+                break;
+        }
+        if(response == false)
+        {
+            JOptionPane.showMessageDialog(null, "Successfully rejected case");
+        }
     }//GEN-LAST:event_btnAdminAcceptActionPerformed
 
     private void lblCloseAdminMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblCloseAdminMouseClicked
@@ -289,7 +322,41 @@ public class Admin extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_CBAdminActionPerformed
 
-   //GEN-LAST:event_btnAssignActionPerformed
+    private void btnAdminRejectActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdminRejectActionPerformed
+        
+        String tableName = "";
+        
+        DefaultTableModel model = (DefaultTableModel) tblAdminPopulateData.getModel();
+        int selectedRowIndex = tblAdminPopulateData.getSelectedRow();
+        
+        if(selectedRowIndex < 0 ){
+            JOptionPane.showMessageDialog(this, "Please select a row to view");
+            return;
+        }
+        int i = JOptionPane.showConfirmDialog(null, "Are you sure you want to Reject this case?");
+        // 0=yes, 1=no, 2=cancel
+        System.out.println(i);
+        AdminService adminService = new AdminService();
+        if(i==0)
+        {
+            String requestId = String.valueOf(model.getValueAt(selectedRowIndex, 0));
+            Boolean r = adminService.rejectCase(tableName, requestId);
+            if(r)
+                JOptionPane.showMessageDialog(null, "Successfully rejected case");
+        }
+        return;
+    }//GEN-LAST:event_btnAdminRejectActionPerformed
+
+    private void btnAssignActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAssignActionPerformed
+        DefaultTableModel model = (DefaultTableModel) tblAdminPopulateData.getModel();
+        int selectedRowIndex = tblAdminPopulateData.getSelectedRow();
+        
+        if(selectedRowIndex < 0 ){
+            JOptionPane.showMessageDialog(this, "Please select a row to view");
+            return;
+        }
+        
+    }//GEN-LAST:event_btnAssignActionPerformed
 
     /**
      * @param args the command line arguments

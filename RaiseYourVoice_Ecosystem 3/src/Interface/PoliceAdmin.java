@@ -14,7 +14,7 @@ public class PoliceAdmin extends javax.swing.JFrame {
      * Creates new form PoliceAdmin
      */
     public PoliceAdmin() {
-      
+        initComponents();
     }
 
     /**

@@ -274,5 +274,36 @@ public class HospitalCounselor extends javax.swing.JFrame {
     private javax.swing.JLabel lblCreateTitle;
     private javax.swing.JTable tblDetails;
     // End of variables declaration//GEN-END:variables
- 
+ private void populateTable() {
+        DefaultTableModel model = (DefaultTableModel) tblDetails.getModel();
+        model.setRowCount(0);
+        int i = 1;
+        /*
+        call table with relelvant details
+        
+        */
+//        AdminService adminService = new AdminService();
+//        ArrayList<AdminDataRequest> result = new ArrayList<>();
+        HospitalService hospitalService = new HospitalService();
+        ArrayList<MedicalRequest> result =new ArrayList<>();
+        result = hospitalService.getCounsellingMedicalRequests(Cemail);
+        if(result == null)
+        {
+            JOptionPane.showMessageDialog(null, "No Data Available");
+            return;
+        }
+        System.out.println(result.size());
+       
+        for(MedicalRequest r: result)
+        {
+            Object[] row = new Object[11];
+            row[0] = r.getRequest_Id();
+            row[1] = r.getVictim_email();
+            row[2] = r.getDepartment();
+            row[3] = r.getAssigned_To();
+            row[4] = r.getStatus();
+            
+            model.addRow(row);
+        }
+    }
 }

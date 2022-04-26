@@ -224,8 +224,46 @@ public class HospitalAdmin extends javax.swing.JFrame {
         return;
     }//GEN-LAST:event_btnAcceptActionPerformed
 
+    private void btnUnalllocatedActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUnalllocatedActionPerformed
+        populateTable(unallocatedTableName);
+    }//GEN-LAST:event_btnUnalllocatedActionPerformed
 
-    //GEN-LAST:event_btnRejectActionPerformed
+    private void btnTestDeptActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTestDeptActionPerformed
+        populateTable(testsTableName);
+    }//GEN-LAST:event_btnTestDeptActionPerformed
+
+    private void btnCounDeptActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCounDeptActionPerformed
+        populateTable(counsellingTableName);
+    }//GEN-LAST:event_btnCounDeptActionPerformed
+
+    private void btnRejectActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRejectActionPerformed
+
+        //enter comments to reject
+        String c = JOptionPane.showInputDialog(this, "Enter Reason for Rejection");
+        
+        HospitalService hospitalService = new HospitalService();
+        
+        DefaultTableModel model = (DefaultTableModel) tblDetails.getModel();
+        int selectedRowIndex = tblDetails.getSelectedRow();
+        
+        if(selectedRowIndex < 0 ){
+            JOptionPane.showMessageDialog(this, "Please select a row to view");
+            return;
+        }
+        
+        int i = JOptionPane.showConfirmDialog(null, "Are you sure you want to Reject this case?");
+        // 0=yes, 1=no, 2=cancel
+        System.out.println(i);
+        
+        if(i==0)
+        {
+            String requestId = String.valueOf(model.getValueAt(selectedRowIndex, 0));
+            Boolean r = hospitalService.rejectCase(requestId, c);
+            if(r)
+                JOptionPane.showMessageDialog(null, "Successfully rejected case");
+        }
+        return;
+    }//GEN-LAST:event_btnRejectActionPerformed
 
     /**
      * @param args the command line arguments
@@ -278,5 +316,41 @@ public class HospitalAdmin extends javax.swing.JFrame {
     private javax.swing.JTable tblDetails;
     // End of variables declaration//GEN-END:variables
 
-  
+    private void populateTable(String tableName) {
+        
+        DefaultTableModel model = (DefaultTableModel) tblDetails.getModel();
+        model.setRowCount(0);
+        
+        HospitalService hospitalService = new HospitalService();
+        ArrayList<MedicalRequest> result = new ArrayList<>();
+        if(tableName.equals(unallocatedTableName))
+        {
+            result = hospitalService.getAllUnallocatedMedicalRequests();
+        }
+        if(tableName.equals(counsellingTableName))
+        {
+            result = hospitalService.getCounsellingMedicalRequests("");
+        }
+        if(tableName.equals(testsTableName))
+        {
+            result = hospitalService.getTestMedicalRequests("");
+        }
+        if(result == null)
+        {
+            JOptionPane.showMessageDialog(null, "No Data Available");
+            return;
+        }
+        
+        for(MedicalRequest r: result)
+        {
+            Object[] row = new Object[11];
+            row[0] = r.getRequest_Id();
+            row[1] = r.getVictim_email();
+            row[2] = r.getProblem_Description();
+            //row[3] = r.getCaseDescription();
+            //row[4] = r.getContact();
+            //row[5] = r.getCaseDescription();
+            model.addRow(row);
+        }
+    }
 }

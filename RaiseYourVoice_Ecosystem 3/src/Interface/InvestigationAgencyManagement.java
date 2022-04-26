@@ -191,7 +191,14 @@ public static String investigationTableName = "investigtationRequests";
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-   
+    private void investigationAgencyDataTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_investigationAgencyDataTableMouseClicked
+        DefaultTableModel model = (DefaultTableModel) investigationAgencyDataTable.getModel();
+        int selectedRowIndex = investigationAgencyDataTable.getSelectedRow();
+        
+        if(selectedRowIndex < 0 ){
+            JOptionPane.showMessageDialog(this, "Please select a row to view");
+            return;
+        }
         /*
         
         */
@@ -220,7 +227,27 @@ public static String investigationTableName = "investigtationRequests";
         return;
     }//GEN-LAST:event_allotInvestigationBtnActionPerformed
 
-   
+    private void shareReportToAdminBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_shareReportToAdminBtnActionPerformed
+        InvestigationService investigationService = new InvestigationService();
+        
+        DefaultTableModel model = (DefaultTableModel) investigationAgencyDataTable.getModel();
+        int selectedRowIndex = investigationAgencyDataTable.getSelectedRow();
+        
+        if(selectedRowIndex < 0 ){
+            JOptionPane.showMessageDialog(this, "Please select a row to view");
+            return;
+        }
+        
+        String requestId = String.valueOf(model.getValueAt(selectedRowIndex, 0));
+        
+        Boolean response = investigationService.shareInvestigationReportWithRYV(requestId);
+        if(response != null)
+        {
+            JOptionPane.showMessageDialog(this, "Successfully Assigned to RYV !");
+            return;
+        }
+        JOptionPane.showMessageDialog(this, "UNSUCCESSFUL !");
+        return;
 
     }//GEN-LAST:event_shareReportToAdminBtnActionPerformed
 
@@ -299,5 +326,5 @@ public static String investigationTableName = "investigtationRequests";
     private javax.swing.JButton shareReportToAdminBtn;
     // End of variables declaration//GEN-END:variables
 
-  
+   
 }

@@ -39,8 +39,7 @@ public class RequestMedical {
                         stmt.executeQuery();
         JOptionPane.showMessageDialog( null, " Request raised sucessfully for "+medReq.getVictim_email());
 	System.out.println("-------------Request raised sucessfully------------------");
-        stmt.close();
-	con.close();
+       
                
 
             } catch (SQLException e1) {

@@ -16,6 +16,41 @@ public class AdminDataRequest {
     public String Department;
     public String Assigned_To;
    
+
+    public String getRequestId() {
+        return requestId;
+    }
+
+    public void setRequestId(String requestId) {
+        this.requestId = requestId;
+    }
+
+    public String getVictimEmail() {
+        return victimEmail;
+    }
+
+    public void setVictimEmail(String victimEmail) {
+        this.victimEmail = victimEmail;
+    }
+
+    public String getDepartment() {
+        return Department;
+    }
+
+    public void setDepartment(String Department) {
+        this.Department = Department;
+    }
+
+    public String getAssigned_To() {
+        return Assigned_To;
+    }
+
+    public void setAssigned_To(String Assigned_To) {
+        this.Assigned_To = Assigned_To;
+    }
+
+   
+
  
     
 }

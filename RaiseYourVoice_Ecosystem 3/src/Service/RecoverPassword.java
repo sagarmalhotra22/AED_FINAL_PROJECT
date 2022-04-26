@@ -94,7 +94,7 @@ public class RecoverPassword {
                     rpass = pass; 
                     }
 
-                    
+                    stmt.close();
                     con.close();
 
 

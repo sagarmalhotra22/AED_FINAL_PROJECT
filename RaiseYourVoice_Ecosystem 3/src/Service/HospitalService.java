@@ -654,5 +654,113 @@ public class HospitalService {
         return null;
     }
     
-   
+    public Boolean closeCounsellingRequest(String requestId, String report,String email)
+    {
+        if(requestId == null)
+            return null;
+        
+        DBConnection DBcon = new DBConnection();
+        
+        Connection con= DBcon.getDbcon();
+        
+        String statusUpdateQuery = prepareQuery(String.valueOf(Constants.HospitalOperations.CLOSE_COUNSELLING_REQUEST), "", "");
+        String staffUpdateQuery = prepareQuery(String.valueOf(Constants.HospitalOperations.RELIEVE_STAFF), "", "");
+        try{
+            //update request status in medicalTable
+            System.out.println(statusUpdateQuery);
+            PreparedStatement s = con.prepareStatement(statusUpdateQuery);
+            s.setString(1, String.valueOf(Constants.Status.COMPLETE));
+            s.setString(2, report);
+            s.setString(3,requestId);
+           
+            Integer r = s.executeUpdate();
+            //System.out.println("medical updated");
+            if(r==0)
+                {
+                JOptionPane.showMessageDialog( null, "Some error occured. Status update unsucccessfull. Please try after sometime.");
+            }
+            con.close();
+            //return true;
+        }
+         catch (SQLException e1)
+        {
+            JOptionPane.showMessageDialog( null, "Some error occured. Status update unsucccessfull. Please try after sometime.");
+        }
+        
+     
+        Connection con1= DBcon.getDbcon();
+        try{
+            
+            PreparedStatement s1 = con1.prepareStatement(staffUpdateQuery);
+            //s1.setString(1, "Not Working");
+            
+                s1.setString(1, email);
+           // Integer r1 = s1.executeUpdate();
+           ResultSet rset=s1.executeQuery();
+            //System.out.println("-------------Query Executed------------");
+            if( !rset.next())
+            {
+                JOptionPane.showMessageDialog( null, "Some error occured. Status update unsucccessfull. Please try after sometime.");
+            }
+            return true;
+        }
+        catch (SQLException e1)
+        {
+            JOptionPane.showMessageDialog( null, "Some error occured. Status update unsucccessfull. Please try after sometime.");
+        }
+        return null;
+    }
+    private String prepareQuery(String operation, String role, String email)
+    {
+        if(operation.equals(String.valueOf(Constants.CommonOperations.GET_UNALLOCATED_REQUESTS)))
+        {
+            return "SELECT * FROM " + Constants.medicalTableName + " WHERE Status=?";
+        }
+        if(operation.equals(String.valueOf(Constants.CommonOperations.GET_UNALLOCATED_TEST_REQUESTS)))
+        {
+            return "SELECT * FROM " + Constants.investigationTableName + " WHERE Status=?";
+        }
+        if(operation.equals(String.valueOf(Constants.HospitalOperations.GET_COUNSELLING_REQUESTS)))
+        {
+            return "SELECT * FROM " + Constants.medicalTableName + " WHERE Status=? OR Assigned_To=?";
+        }
+        if(operation.equals(String.valueOf(Constants.HospitalOperations.GET_TEST_REQUESTS)))
+        {
+            return "SELECT * FROM " + Constants.investigationTableName + " WHERE Status=? OR Status=? OR Assigned_To=?";
+        }
+        if(operation.equals(String.valueOf(Constants.HospitalOperations.ASSIGN_TO_COUNSELLING)))
+        {
+            return "UPDATE " + Constants.medicalTableName + " SET Status=?, Assigned_To=? WHERE Request_Id=?";
+        }
+        if(operation.equals(String.valueOf(Constants.HospitalOperations.SELECT_COUNSELLING_STAFF)))
+        {
+            return "SELECT * FROM  " + Constants.staffTableName + 
+                    " WHERE Working_Status is null AND role=? FETCH FIRST 1 ROW ONLY";
+        }
+        if(operation.equals(String.valueOf(Constants.HospitalOperations.ASSIGN_STAFF)))
+        {
+            return "UPDATE " + Constants.staffTableName + " SET Working_Status=? WHERE email=?" ;
+        }
+        if(operation.equals(String.valueOf(Constants.HospitalOperations.ASSIGN_TO_TEST)))
+        {
+            return "UPDATE " + Constants.investigationTableName + " SET Status= ?,Test_Assigne=? WHERE Request_Id=?";
+        }
+        if(operation.equals(String.valueOf(Constants.HospitalOperations.CLOSE_COUNSELLING_REQUEST)))
+        {
+            return "UPDATE " + Constants.medicalTableName + " SET Status=?, Notes=? WHERE Request_Id=?";
+        }
+        if(operation.equals(String.valueOf(Constants.HospitalOperations.RELIEVE_STAFF)))
+        {
+            return "UPDATE " + Constants.staffTableName + " SET Working_Status=NULL WHERE email=?";
+        }
+        if(operation.equals(String.valueOf(Constants.CommonOperations.REJECT)))
+        {
+            return "UPDATE " + Constants.medicalTableName + " SET Status=REJECTED, Notes=? WHERE Request_Id=?";
+        }
+        if(operation.equals(String.valueOf(Constants.HospitalOperations.ASSIGN_TO_INVESTIGATION)))
+        {
+            return "UPDATE " + Constants.investigationTableName + " SET Status=?, Notes=? WHERE Request_Id=?";
+        }
+        return null;
+    }
 }

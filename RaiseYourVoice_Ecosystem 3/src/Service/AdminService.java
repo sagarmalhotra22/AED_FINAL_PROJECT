@@ -222,7 +222,7 @@ public class AdminService {
         {
             if(tableName.equals(Constants.investigationTableName))
             {
-               
+                return "UPDATE " + Constants.investigationTableName + " SET Status=?, Department=? WHERE Request_Id=?";
             }
         }
         return null;

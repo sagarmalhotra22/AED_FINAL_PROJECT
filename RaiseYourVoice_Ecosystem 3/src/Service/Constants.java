@@ -51,6 +51,12 @@ public class Constants {
     enum StaffStatus {
         WORKING, NOT_WORKING
     }
+    enum Department {
+        COUNSELLING_DEPARTMENT, INVESTIGATION_DEPARTMENT, MANAGEMENT, ADMINISTRATION,LAWYER_DEPARTMENT,JUDGE_DEPARTMENT,TEST_DEPARTMENT
+    }
     
+    enum Roles {
+        Counselor, Investigator, Collector, Assistant,Admin, Lawyer, Judge
+    } 
    
 }

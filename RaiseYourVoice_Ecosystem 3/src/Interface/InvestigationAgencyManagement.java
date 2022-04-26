@@ -326,5 +326,36 @@ public static String investigationTableName = "investigtationRequests";
     private javax.swing.JButton shareReportToAdminBtn;
     // End of variables declaration//GEN-END:variables
 
-   
+    private void populateTable(String tableName) {
+        DefaultTableModel model = (DefaultTableModel) investigationAgencyDataTable.getModel();
+        model.setRowCount(0);
+        int i = 1;
+        
+        InvestigationService investigationService = new InvestigationService();
+        
+        ArrayList<InvestigationRequest> response = tableName.equals(unallocatedTableName) ? 
+                investigationService.getUnallocatedMedicalRequests() : investigationService.getInvestigationRequests("");
+        
+        if(response == null)
+        {
+            JOptionPane.showMessageDialog(null, "No Data Available");
+            return;
+        }
+        
+        for(InvestigationRequest r: response)
+        {
+            Object[] row = new Object[11];
+            row[0] = r.getRequest_Id();
+            row[1] = r.getVictim_email();
+            row[2] = r.getCrime_Description();
+            //row[3] = r.getCaseDescription();
+            //row[4] = r.getContact();
+            //row[5] = r.getCaseDescription();
+            model.addRow(row);
+        }
+        /*
+        call table with relelvant details
+        
+        */
+    }
 }

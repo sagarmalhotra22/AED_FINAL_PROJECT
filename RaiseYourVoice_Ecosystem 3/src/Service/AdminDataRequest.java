@@ -15,7 +15,7 @@ public class AdminDataRequest {
     public String victimEmail;
     public String Department;
     public String Assigned_To;
-   
+    public String status;
 
     public String getRequestId() {
         return requestId;
@@ -49,7 +49,13 @@ public class AdminDataRequest {
         this.Assigned_To = Assigned_To;
     }
 
-   
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
 
  
     

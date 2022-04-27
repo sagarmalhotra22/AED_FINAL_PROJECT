@@ -28,7 +28,10 @@ public class SampleCollector extends javax.swing.JFrame {
 //    }
 
     SampleCollector(String email, String password) {
-
+initComponents();
+        this.email= email;
+            this.pass= password;
+            populateTable();
 //   throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
@@ -227,7 +230,24 @@ public class SampleCollector extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_btnTestDept1ActionPerformed
 
-   
+    private void btnTestDeptActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTestDeptActionPerformed
+        // TODO add your handling code here:
+        HospitalService hospitalService = new HospitalService();
+        DefaultTableModel model = (DefaultTableModel) tblDetails.getModel();
+        int selectedRowIndex = tblDetails.getSelectedRow();
+        
+        if(selectedRowIndex < 0 ){
+            JOptionPane.showMessageDialog(this, "Please select a row to view");
+            return;
+        }
+        
+        String requestId = String.valueOf(model.getValueAt(selectedRowIndex, 0));
+          Boolean reponse  =hospitalService.assignRequestToAssistant(requestId, email);
+      
+            if(reponse != null)
+                JOptionPane.showMessageDialog(this, "Successfully Assigned to Assistant!");
+            return;
+        
         
     }//GEN-LAST:event_btnTestDeptActionPerformed
 
@@ -284,7 +304,39 @@ public class SampleCollector extends javax.swing.JFrame {
     private javax.swing.JTable tblDetails;
     // End of variables declaration//GEN-END:variables
 
-    
+    private void populateTable() {
+        DefaultTableModel model = (DefaultTableModel) tblDetails.getModel();
+        model.setRowCount(0);
+        int i = 1;
+        /*
+        call table with relelvant details
+        
+        */
+        HospitalService hospitalService = new HospitalService();
+        ArrayList<MedicalRequest> result = new ArrayList<>();
+        
+        result = hospitalService.getTestSampleMedicalRequests(email);
+        
+        if(result == null)
+        {
+            JOptionPane.showMessageDialog(null, "No Data Available");
+            return;
+        }
+        System.out.println(result.size());
+       
+        for(MedicalRequest r: result)
+        {
+            Object[] row = new Object[11];
+            row[0] = r.getRequest_Id();
+            row[1] = r.getVictim_email();
+            row[2] = r.getDepartment();
+            row[3] = r.getAssigned_To();
+            row[4] = r.getStatus();
+            
+            model.addRow(row);
+        }
+    }
         //throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     
 }
+

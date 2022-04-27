@@ -356,7 +356,7 @@ public class InvestigationService {
         if(operation.equals(String.valueOf(Constants.InvestigationOperations.ASSIGN_TO_HOSPITAL)))
         {
             return "UPDATE " + Constants.investigationTableName + " SET Status=? WHERE Request_Id=?";
-            return "INSERT INTO " + Constants.medicalTestsTableName + "(REQUEST_ID,VICTIM_EMAIL,DEPARTMENT,ASSIGNED_TO,STATUS,NOTES,REQUEST_DATE,UPDATE_DATE) VALUES(?,?,?,?,?,?,?,?)";
+            //return "INSERT INTO " + Constants.medicalTestsTableName + "(REQUEST_ID,VICTIM_EMAIL,DEPARTMENT,ASSIGNED_TO,STATUS,NOTES,REQUEST_DATE,UPDATE_DATE) VALUES(?,?,?,?,?,?,?,?)";
         }
         return null;
     }

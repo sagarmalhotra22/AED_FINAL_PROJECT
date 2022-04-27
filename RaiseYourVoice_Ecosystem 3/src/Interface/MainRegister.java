@@ -651,7 +651,7 @@ public class MainRegister extends javax.swing.JFrame {
          else if(CBTabStaffDept.getSelectedItem().toString()=="COUNSELLING_DEPARTMENT"){
              CBTabStaffRole.removeAllItems();
               CBTabStaffRole.addItem("Select");
-           CBTabStaffRole.addItem("Counsellor");
+           CBTabStaffRole.addItem("Counselor");
            
            }
          else if(CBTabStaffDept.getSelectedItem().toString()=="TEST_DEPARTMENT"){

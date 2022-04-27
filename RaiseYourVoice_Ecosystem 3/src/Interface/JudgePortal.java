@@ -20,9 +20,6 @@ public class JudgePortal extends javax.swing.JFrame {
      */
    public String email;
    public String pass;
-//    public JudgePortal() {
-//        initComponents();
-//    }
 
     JudgePortal(String email, String password) {
         initComponents();

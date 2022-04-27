@@ -25,12 +25,7 @@ public class Admin extends javax.swing.JFrame {
     public static String medicalTableName = "medicalRequests";
     public static String lawTableName = "lawRequests";
     
-//    public Admin() {
-//        initComponents();
-//        btnAssign.setVisible(true);
-//        btnAdminAccept.setVisible(true);
-//        btnAdminReject.setVisible(true);
-//    }
+
 
     Admin(String email, String password) {
         initComponents();

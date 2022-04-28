@@ -239,7 +239,38 @@ public class HospitalTestReport extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-   
+    private void lblAdminLogoutMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblAdminLogoutMouseClicked
+        // TODO add your handling code here:
+        JOptionPane.showMessageDialog(null,"Successfully Logout");
+        this.dispose();
+        new HomePage().setVisible(true);
+    }//GEN-LAST:event_lblAdminLogoutMouseClicked
+
+    private void lblCloseAdminMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblCloseAdminMouseClicked
+        // TODO add your handling code here:
+        this.dispose();
+    }//GEN-LAST:event_lblCloseAdminMouseClicked
+
+    private void btnTestDeptActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTestDeptActionPerformed
+        HospitalService hospitalService = new HospitalService();
+        DefaultTableModel model = (DefaultTableModel) tblDetails.getModel();
+        int selectedRowIndex = tblDetails.getSelectedRow();
+        
+        if(selectedRowIndex < 0 ){
+            JOptionPane.showMessageDialog(this, "Please select a row to view");
+            return;
+        }
+        
+        String requestId = String.valueOf(model.getValueAt(selectedRowIndex, 0));
+        String testReport = jTextArea1.getText();
+        Boolean reponse  = hospitalService.assignToInvestigationDepartment(requestId, testReport, email);
+      
+            if(reponse != null)
+                JOptionPane.showMessageDialog(this, "Successfully Assigned to Assistant!");
+            return;
+        
+        
+    }//GEN-LAST:event_btnTestDeptActionPerformed
 
     /**
      * @param args the command line arguments

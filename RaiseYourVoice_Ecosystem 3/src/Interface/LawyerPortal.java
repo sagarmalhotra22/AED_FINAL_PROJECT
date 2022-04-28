@@ -17,9 +17,7 @@ public class LawyerPortal extends javax.swing.JFrame {
      */
     public String email;
    public String pass;
-//    public LawyerPortal() {
-//        initComponents();
-//    }
+
 
     LawyerPortal(String email, String password) {
         initComponents();

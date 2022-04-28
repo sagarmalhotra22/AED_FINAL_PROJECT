@@ -23,9 +23,7 @@ public class SampleCollector extends javax.swing.JFrame {
      */
     public String email;
    public String pass;
-//    public SampleCollector() {
-//        initComponents();
-//    }
+
 
     SampleCollector(String email, String password) {
 initComponents();

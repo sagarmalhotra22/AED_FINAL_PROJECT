@@ -67,7 +67,42 @@ public class LawService {
         return null;
     }
     
+    public Boolean presentCase(String email, String notes, String requestId)
+    {
+        DBConnection DBcon = new DBConnection();
+        System.out.println("-------------Fetching Investigation Request-------------");
+        Connection con = DBcon.getDbcon();
+        
+        String query = prepareQuery(String.valueOf(Constants.LawOperations.PRESENT_CASE), "", "");
+        
+        if(query.isBlank() || query.isEmpty())
+            return null;
+        try{
+            PreparedStatement s = con.prepareCall(query);
+            s.setString(1, String.valueOf(Constants.Status.CASE_PRESENTED));
+            s.setString(2, email);
+            s.setString(3, notes);
+            s.setString(4, requestId);
+            System.out.println("-------------Fetching law requests from " + Constants.investigationTableName + "------------");
+            Integer r = s.executeUpdate();
+            System.out.println("-------------Query Executed------------");
+            if(r==0)
+            {
+                JOptionPane.showMessageDialog( null, "Some error occured. Data fetch unsucccessfull. Please try after sometime.");
+            }
+            s.close();
+            con.close();
+            return true;
+        }
+        catch(SQLException e)
+        {
+            JOptionPane.showMessageDialog( null, "Some error occured. Data fetch unsucccessfull. Please try after sometime.");
+        }
+        return null;
+    }
+    
    
+    
     
     private String prepareQuery(String operation, String role, String email)
     {

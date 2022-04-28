@@ -1,3 +1,4 @@
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -101,8 +102,88 @@ public class LawService {
         return null;
     }
     
-   
+    public ArrayList<InvestigationRequest> getJudgeRequests()
+    {
+        ArrayList<InvestigationRequest> judgeRequests = new ArrayList<InvestigationRequest>();
+        DBConnection DBcon = new DBConnection();
+        System.out.println("-------------Fetching Investigation Request-------------");
+        Connection con= DBcon.getDbcon();
+        
+        String query = prepareQuery(String.valueOf(Constants.LawOperations.GET_JUDGE_REQUESTS), "", "");
+        if(query.isBlank() || query.isEmpty())
+            return null;
+        
+        try{
+            PreparedStatement s = con.prepareCall(query);
+            s.setString(1, String.valueOf(Constants.Status.CASE_PRESENTED));
+            System.out.println("-------------Fetching judge requests from " + Constants.investigationTableName + "------------");
+            ResultSet r = s.executeQuery();
+            System.out.println("-------------Query Executed------------");
+            if(r==null)
+            {
+                JOptionPane.showMessageDialog( null, "Some error occured. Data fetch unsucccessfull. Please try after sometime.");
+            }
+            
+            while(r.next())
+            {
+                InvestigationRequest investigationRequest = new InvestigationRequest();
+                investigationRequest.setRequest_Id((!r.getString("Request_Id").isBlank() || r.getString("Request_Id").isEmpty()) ? 
+                        r.getString("Request_Id") : null);
+                investigationRequest.setVictim_email((!r.getString("Victim_email").isBlank() || r.getString("Victim_email").isEmpty()) ? 
+                        r.getString("Victim_email") : null);
+                investigationRequest.setCrime_Description((r.getString("Crime_Description").isBlank() || r.getString("Crime_Description").isEmpty()) ? 
+                        r.getString("Crime_Description") : null);
+                investigationRequest.setStatus((r.getString("Status").isBlank() || r.getString("Status").isEmpty()) ?
+                        r.getString("Status") : null);
+                
+                if(!investigationRequest.getVictim_email().isEmpty() || !investigationRequest.getVictim_email().isBlank())
+                    judgeRequests.add(investigationRequest);
+            }
+            s.close();
+            con.close();
+            return judgeRequests;
+        
+        }
+        catch(SQLException e)
+        {
+            JOptionPane.showMessageDialog( null, "Some error occured. Data fetch unsucccessfull. Please try after sometime.");
+        }
+        return null;
+    }
     
+    public Boolean passJudgement(String requestId, String notes)
+    {
+        DBConnection DBcon = new DBConnection();
+        System.out.println("-------------Logging In-------------");
+        Connection con = DBcon.getDbcon();
+        
+        String query = prepareQuery(String.valueOf(Constants.LawOperations.PRESENT_CASE), "", "");
+        
+        if(query.isBlank() || query.isEmpty())
+            return null;
+        try{
+            PreparedStatement s = con.prepareCall(query);
+            s.setString(1, String.valueOf(Constants.Status.CASE_CLOSED));
+            s.setString(2, "");
+            s.setString(3, notes);
+            s.setString(4, requestId);
+            System.out.println("-------------Fetching law requests from " + Constants.investigationTableName + "------------");
+            Integer r = s.executeUpdate();
+            System.out.println("-------------Query Executed------------");
+            if(r==0)
+            {
+                JOptionPane.showMessageDialog( null, "Some error occured. Data fetch unsucccessfull. Please try after sometime.");
+            }
+            s.close();
+            con.close();
+            return true;
+        }
+        catch(SQLException e)
+        {
+            JOptionPane.showMessageDialog( null, "Some error occured. Data fetch unsucccessfull. Please try after sometime.");
+        }
+        return null;
+    }
     
     private String prepareQuery(String operation, String role, String email)
     {

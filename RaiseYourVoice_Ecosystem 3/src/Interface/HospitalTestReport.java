@@ -21,9 +21,6 @@ public class HospitalTestReport extends javax.swing.JFrame {
      */
     public String email;
    public String pass;
-//    public HospitalTestReport() {
-//        initComponents();
-//    }
 
     HospitalTestReport(String email, String password) {
       initComponents();

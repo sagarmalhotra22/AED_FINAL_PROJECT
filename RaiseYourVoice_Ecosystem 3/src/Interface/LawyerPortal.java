@@ -217,6 +217,26 @@ public class LawyerPortal extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void lblLogoutMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblLogoutMouseClicked
+        // TODO add your handling code here:
+        JOptionPane.showMessageDialog(null,"Successfully Logout");
+        new HomePage().setVisible(true);
+    }//GEN-LAST:event_lblLogoutMouseClicked
+
+    private void lblCloseLogin1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblCloseLogin1MouseClicked
+        // TODO add your handling code here:
+        this.dispose();
+    }//GEN-LAST:event_lblCloseLogin1MouseClicked
+
+    private void lblCloseLogin2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblCloseLogin2MouseClicked
+        // TODO add your handling code here:
+        this.dispose();
+    }//GEN-LAST:event_lblCloseLogin2MouseClicked
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        jTabbedPane1.setSelectedIndex(1);
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments

@@ -17,7 +17,8 @@ public class MedicalTestRequest {
     public String Assigned_To;
     public String Status;
     public String Notes;
-public String getRequest_Id() {
+
+    public String getRequest_Id() {
         return Request_Id;
     }
 
@@ -72,7 +73,6 @@ public String getRequest_Id() {
     public void setNotes(String Notes) {
         this.Notes = Notes;
     }
-    
     
     
     

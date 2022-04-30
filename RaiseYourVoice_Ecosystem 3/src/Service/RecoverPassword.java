@@ -70,10 +70,11 @@ public class RecoverPassword {
        }
         else if (user.equalsIgnoreCase("Staff")){
          try{
-                    PreparedStatement stmt=con.prepareStatement("Select password from STAFF where EMAIL=?");
+                    PreparedStatement stmt=con.prepareStatement("Select password, security_question from STAFF where EMAIL=?");
 
                                     
                                     stmt.setString(1,email);
+                                    
                                     ResultSet rset=stmt.executeQuery();
 
                     System.out.println("query executed");
@@ -88,6 +89,7 @@ public class RecoverPassword {
                     }
                     else if(!(question.trim().equalsIgnoreCase(petname.trim()))){
                         JOptionPane.showMessageDialog(null, "Incorrect Pet name");
+                        pass=null;
                     }
                     else
                     {JOptionPane.showMessageDialog(null, "Password Recovery Successfull");
@@ -100,6 +102,7 @@ public class RecoverPassword {
 
                 } 
                 catch (SQLException e1) {
+                    
                         JOptionPane.showMessageDialog( null, "Some Error Occured.Password Recovery Unsucccessfull. Please Try After Sometime.");
                     }
              

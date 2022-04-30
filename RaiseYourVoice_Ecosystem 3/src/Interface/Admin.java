@@ -25,13 +25,20 @@ public class Admin extends javax.swing.JFrame {
     public static String medicalTableName = "medicalRequests";
     public static String lawTableName = "lawRequests";
     
-
+//    public Admin() {
+//        initComponents();
+//        btnAssign.setVisible(true);
+//        btnAdminAccept.setVisible(true);
+//        btnAdminReject.setVisible(true);
+//    }
 
     Admin(String email, String password) {
         initComponents();
-        btnAssign.setVisible(true);
-        btnAdminAccept.setVisible(true);
-        btnAdminReject.setVisible(true);
+        btnAssign.setVisible(false);
+        TFAdminRequestId.setVisible(false);
+        CBAdmin.setVisible(false);
+        btnAdminAccept.setVisible(false);
+        btnAdminReject.setVisible(false);
          }
 
     /**
@@ -59,6 +66,7 @@ public class Admin extends javax.swing.JFrame {
         lblAdminLogout = new javax.swing.JLabel();
         TFAdminRequestId = new javax.swing.JTextField();
         CBAdmin = new javax.swing.JComboBox<>();
+        btnUnallocatedRequest1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(255, 255, 255));
@@ -80,13 +88,13 @@ public class Admin extends javax.swing.JFrame {
 
         btnUnallocatedRequest.setBackground(new java.awt.Color(255, 153, 51));
         btnUnallocatedRequest.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        btnUnallocatedRequest.setText("Unallocated Requests");
+        btnUnallocatedRequest.setText("UNALLOCATED REQUESTS");
         btnUnallocatedRequest.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnUnallocatedRequestActionPerformed(evt);
             }
         });
-        pnlAdminFull.add(btnUnallocatedRequest, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 120, 230, 40));
+        pnlAdminFull.add(btnUnallocatedRequest, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 130, 230, 40));
 
         btnHospitalData.setBackground(new java.awt.Color(255, 153, 51));
         btnHospitalData.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
@@ -110,31 +118,31 @@ public class Admin extends javax.swing.JFrame {
 
         tblAdminPopulateData.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null}
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
             },
             new String [] {
-                "Request ID", "Victim Name", "Department", "Assigned To", "Status"
+                "Request ID", "Victim Email", "Department", "Status"
             }
         ));
         tblAdminPopulateData.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -208,6 +216,7 @@ public class Admin extends javax.swing.JFrame {
         });
         pnlAdminFull.add(lblAdminLogout, new org.netbeans.lib.awtextra.AbsoluteConstraints(1470, 60, 70, 20));
 
+        TFAdminRequestId.setEditable(false);
         TFAdminRequestId.setFont(new java.awt.Font("Segoe UI Light", 1, 20)); // NOI18N
         TFAdminRequestId.setForeground(new java.awt.Color(102, 102, 102));
         TFAdminRequestId.setText("Request ID...");
@@ -220,13 +229,23 @@ public class Admin extends javax.swing.JFrame {
         pnlAdminFull.add(TFAdminRequestId, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 510, 220, 40));
 
         CBAdmin.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        CBAdmin.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Hospital Enterprise", "Investigation Enterprise" }));
+        CBAdmin.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Select", "Hospital Enterprise", "Investigation Enterprise" }));
         CBAdmin.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 CBAdminActionPerformed(evt);
             }
         });
         pnlAdminFull.add(CBAdmin, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 600, 330, 40));
+
+        btnUnallocatedRequest1.setBackground(new java.awt.Color(255, 153, 51));
+        btnUnallocatedRequest1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        btnUnallocatedRequest1.setText("CLOSED Requests");
+        btnUnallocatedRequest1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnUnallocatedRequest1ActionPerformed(evt);
+            }
+        });
+        pnlAdminFull.add(btnUnallocatedRequest1, new org.netbeans.lib.awtextra.AbsoluteConstraints(1200, 130, 230, 40));
 
         getContentPane().add(pnlAdminFull, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1560, 830));
 
@@ -235,19 +254,38 @@ public class Admin extends javax.swing.JFrame {
 
     private void btnLawDataActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLawDataActionPerformed
         populateTable(lawTableName);
+        btnAssign.setVisible(false);
+        TFAdminRequestId.setVisible(false);
+        CBAdmin.setVisible(false);
+        btnAdminAccept.setVisible(false);
+        btnAdminReject.setVisible(false);
     }//GEN-LAST:event_btnLawDataActionPerformed
 
     private void btnHospitalDataActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHospitalDataActionPerformed
         populateTable(medicalTableName);
+        btnAssign.setVisible(false);
+        TFAdminRequestId.setVisible(false);
+        CBAdmin.setVisible(false);
+        btnAdminAccept.setVisible(false);
+        btnAdminReject.setVisible(false);
     }//GEN-LAST:event_btnHospitalDataActionPerformed
 
     private void btnInvestigationDataActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInvestigationDataActionPerformed
         populateTable(investigationTableName);
+        btnAssign.setVisible(false);
+        TFAdminRequestId.setVisible(false);
+        CBAdmin.setVisible(false);
+        btnAdminAccept.setVisible(false);
+        btnAdminReject.setVisible(false);
     }//GEN-LAST:event_btnInvestigationDataActionPerformed
 
     private void btnUnallocatedRequestActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUnallocatedRequestActionPerformed
         populateTable(unallocatedTableName);
-        
+        btnAssign.setVisible(true);
+        TFAdminRequestId.setVisible(true);
+        CBAdmin.setVisible(true);
+        btnAdminAccept.setVisible(true);
+        btnAdminReject.setVisible(true);
     }//GEN-LAST:event_btnUnallocatedRequestActionPerformed
 
     private void tblAdminPopulateDataMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblAdminPopulateDataMouseClicked
@@ -294,18 +332,24 @@ public class Admin extends javax.swing.JFrame {
         }
         if(response == false)
         {
-            JOptionPane.showMessageDialog(null, "Successfully rejected case");
+            JOptionPane.showMessageDialog(null, "Something went wrong. Please try again!");
+            return;
         }
+        JOptionPane.showMessageDialog(null, "Successfully allocated!");
+        populateTable(unallocatedTableName);
+        TFAdminRequestId.setText("");
     }//GEN-LAST:event_btnAdminAcceptActionPerformed
 
     private void lblCloseAdminMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblCloseAdminMouseClicked
         // TODO add your handling code here:
         this.dispose();
+        new HomePage().setVisible(true);
     }//GEN-LAST:event_lblCloseAdminMouseClicked
 
     private void lblAdminLogoutMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblAdminLogoutMouseClicked
         // TODO add your handling code here:
         JOptionPane.showMessageDialog(null,"Successfully Logout");
+        this.dispose();
         new HomePage().setVisible(true);
     }//GEN-LAST:event_lblAdminLogoutMouseClicked
 
@@ -351,7 +395,19 @@ public class Admin extends javax.swing.JFrame {
             return;
         }
         
+        String requestId = String.valueOf(model.getValueAt(selectedRowIndex, 0));
+        TFAdminRequestId.setText(requestId);
+        
     }//GEN-LAST:event_btnAssignActionPerformed
+
+    private void btnUnallocatedRequest1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUnallocatedRequest1ActionPerformed
+        populateClosedTable();
+        btnAssign.setVisible(false);
+        TFAdminRequestId.setVisible(false);
+        CBAdmin.setVisible(false);
+        btnAdminAccept.setVisible(false);
+        btnAdminReject.setVisible(false);
+    }//GEN-LAST:event_btnUnallocatedRequest1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -398,6 +454,7 @@ public class Admin extends javax.swing.JFrame {
     private javax.swing.JButton btnInvestigationData;
     private javax.swing.JButton btnLawData;
     private javax.swing.JButton btnUnallocatedRequest;
+    private javax.swing.JButton btnUnallocatedRequest1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lblAdminLogout;
     private javax.swing.JLabel lblAdminPic;
@@ -418,7 +475,8 @@ public class Admin extends javax.swing.JFrame {
         AdminService adminService = new AdminService();
         ArrayList<AdminDataRequest> result = new ArrayList<>();
         
-        result = tableName.equals("unallocatedRequests") ? adminService.getAdminRequests() : adminService.getRequests(tableName, false);
+        result = tableName.equals("unallocatedRequests") ? adminService.getAdminRequests() : tableName.equals("lawRequests") ? 
+                adminService.getLawRequest(): adminService.getRequests(tableName, false);
         if(result == null)
         {
             JOptionPane.showMessageDialog(null, "No Data Available");
@@ -432,8 +490,40 @@ public class Admin extends javax.swing.JFrame {
             row[0] = r.getRequestId();
             row[1] = r.getVictimEmail();
             row[2] = r.getDepartment();
-            row[3] = r.getAssigned_To();
-            row[4] = r.getStatus();
+           
+            row[3] = r.getStatus();
+            
+            model.addRow(row);
+        }
+    }
+
+    private void populateClosedTable() {
+        DefaultTableModel model = (DefaultTableModel) tblAdminPopulateData.getModel();
+        model.setRowCount(0);
+        int i = 1;
+        /*
+        call table with relelvant details
+        
+        */
+        AdminService adminService = new AdminService();
+        ArrayList<AdminDataRequest> result = new ArrayList<>();
+        
+        result = adminService.getClosedRequests();
+        if(result == null)
+        {
+            JOptionPane.showMessageDialog(null, "No Data Available");
+            return;
+        }
+        System.out.println(result.size());
+       
+        for(AdminDataRequest r: result)
+        {
+            Object[] row = new Object[11];
+            row[0] = r.getRequestId();
+            row[1] = r.getVictimEmail();
+            row[2] = r.getDepartment();
+            //row[3] = r.getAssigned_To();
+            row[3] = r.getStatus();
             
             model.addRow(row);
         }

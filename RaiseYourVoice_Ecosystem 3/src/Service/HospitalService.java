@@ -54,14 +54,18 @@ public class HospitalService {
             while(r.next())
             {
                 MedicalRequest medicalRequest = new MedicalRequest();
-                medicalRequest.setRequest_Id((!r.getString("Request_Id").isBlank() || r.getString("Request_Id").isEmpty()) ? 
+                medicalRequest.setRequest_Id((!r.getString("Request_Id").isBlank() || !r.getString("Request_Id").isEmpty()) ? 
                         r.getString("Request_Id") : null);
-                medicalRequest.setVictim_email((!r.getString("Victim_email").isBlank() || r.getString("Victim_email").isEmpty()) ? 
+                medicalRequest.setVictim_email((!r.getString("Victim_email").isBlank() || !r.getString("Victim_email").isEmpty()) ? 
                         r.getString("Victim_email") : null);
-                medicalRequest.setProblem_Description((r.getString("Problem_Description").isBlank() || r.getString("Problem_Description").isEmpty()) ? 
+                medicalRequest.setProblem_Description((!r.getString("Problem_Description").isBlank() || !r.getString("Problem_Description").isEmpty()) ? 
                         r.getString("Problem_Description") : null);
-                medicalRequest.setStatus((r.getString("Status").isBlank() || r.getString("Status").isEmpty()) ?
+                medicalRequest.setAssigned_To((!r.getString("Assigned_To").isBlank() || !r.getString("Assigned_To").isEmpty()) ? 
+                        r.getString("Assigned_To") : null);
+                medicalRequest.setStatus((!r.getString("Status").isBlank() || !r.getString("Status").isEmpty()) ?
                         r.getString("Status") : null);
+                medicalRequest.setNotes(r.getString("Notes") != null ?
+                        r.getString("Notes") : null);
                 
                 if(!medicalRequest.getRequest_Id().isEmpty() || !medicalRequest.getRequest_Id().isBlank())
                     medicalRequests.add(medicalRequest);
@@ -102,14 +106,18 @@ public class HospitalService {
             while(r.next())
             {
                 MedicalRequest medicalRequest = new MedicalRequest();
-                medicalRequest.setRequest_Id((!r.getString("Request_Id").isBlank() || r.getString("Request_Id").isEmpty()) ? 
+                medicalRequest.setRequest_Id((!r.getString("Request_Id").isBlank() || !r.getString("Request_Id").isEmpty()) ? 
                         r.getString("Request_Id") : null);
-                medicalRequest.setVictim_email((!r.getString("Victim_email").isBlank() || r.getString("Victim_email").isEmpty()) ? 
+                medicalRequest.setVictim_email((!r.getString("Victim_email").isBlank() || !r.getString("Victim_email").isEmpty()) ? 
                         r.getString("Victim_email") : null);
-                medicalRequest.setProblem_Description((r.getString("Crime_Description").isBlank() || r.getString("Crime_Description").isEmpty()) ? 
+                medicalRequest.setProblem_Description((!r.getString("Crime_Description").isBlank() || !r.getString("Crime_Description").isEmpty()) ? 
                         r.getString("Crime_Description") : null);
-                medicalRequest.setStatus((r.getString("Status").isBlank() || r.getString("Status").isEmpty()) ?
+                medicalRequest.setAssigned_To(r.getString("Test_Assigne") != null ? 
+                        r.getString("Test_Assigne") : null);
+                medicalRequest.setStatus((!r.getString("Status").isBlank() || !r.getString("Status").isEmpty()) ?
                         r.getString("Status") : null);
+                medicalRequest.setNotes(r.getString("Notes") != null ?
+                        r.getString("Notes") : null);
                 
                 if(!medicalRequest.getRequest_Id().isEmpty() || !medicalRequest.getRequest_Id().isBlank())
                     medicalRequests.add(medicalRequest);
@@ -154,14 +162,18 @@ public class HospitalService {
             while(r.next())
             {
                 MedicalRequest medicalRequest = new MedicalRequest();
-                 medicalRequest.setRequest_Id((!r.getString("Request_Id").isBlank() || r.getString("Request_Id").isEmpty()) ? 
+                 medicalRequest.setRequest_Id((!r.getString("Request_Id").isBlank() || !r.getString("Request_Id").isEmpty()) ? 
                         r.getString("Request_Id") : null);
-                medicalRequest.setVictim_email((!r.getString("Victim_email").isBlank() || r.getString("Victim_email").isEmpty()) ? 
+                medicalRequest.setVictim_email((!r.getString("Victim_email").isBlank() || !r.getString("Victim_email").isEmpty()) ? 
                         r.getString("Victim_email") : null);
-                medicalRequest.setProblem_Description((r.getString("Problem_Description").isBlank() || r.getString("Problem_Description").isEmpty()) ? 
+                medicalRequest.setProblem_Description((!r.getString("Problem_Description").isBlank() || !r.getString("Problem_Description").isEmpty()) ? 
                         r.getString("Problem_Description") : null);
-                medicalRequest.setStatus((r.getString("Status").isBlank() || r.getString("Status").isEmpty()) ?
+                medicalRequest.setAssigned_To((!r.getString("Assigned_To").isBlank() || !r.getString("Assigned_To").isEmpty()) ? 
+                        r.getString("Assigned_To") : null);
+                medicalRequest.setStatus((!r.getString("Status").isBlank() || !r.getString("Status").isEmpty()) ?
                         r.getString("Status") : null);
+                medicalRequest.setNotes(r.getString("Notes") != null ?
+                        r.getString("Notes") : null);
                 
                 if(!medicalRequest.getVictim_email().isEmpty() || !medicalRequest.getVictim_email().isBlank())
                     medicalRequests.add(medicalRequest);
@@ -206,14 +218,18 @@ public class HospitalService {
             while(r.next())
             {
                 MedicalRequest medicalRequest = new MedicalRequest();
-                medicalRequest.setRequest_Id((!r.getString("Request_Id").isBlank() || r.getString("Request_Id").isEmpty()) ? 
+                medicalRequest.setRequest_Id((!r.getString("Request_Id").isBlank() || !r.getString("Request_Id").isEmpty()) ? 
                         r.getString("Request_Id") : null);
-                medicalRequest.setVictim_email((!r.getString("Victim_email").isBlank() || r.getString("Victim_email").isEmpty()) ? 
+                medicalRequest.setVictim_email((!r.getString("Victim_email").isBlank() || !r.getString("Victim_email").isEmpty()) ? 
                         r.getString("Victim_email") : null);
-                medicalRequest.setProblem_Description((r.getString("Crime_Description").isBlank() || r.getString("Crime_Description").isEmpty()) ? 
+                medicalRequest.setProblem_Description((!r.getString("Crime_Description").isBlank() || !r.getString("Crime_Description").isEmpty()) ? 
                         r.getString("Crime_Description") : null);
-                medicalRequest.setStatus((r.getString("Status").isBlank() || r.getString("Status").isEmpty()) ?
+                medicalRequest.setAssigned_To(r.getString("Test_Assigne") != null ? 
+                        r.getString("Test_Assigne") : null);
+                medicalRequest.setStatus((!r.getString("Status").isBlank() || !r.getString("Status").isEmpty()) ?
                         r.getString("Status") : null);
+                medicalRequest.setNotes(r.getString("Notes") != null ?
+                        r.getString("Notes") : null);
                 
                 if(!medicalRequest.getVictim_email().isEmpty() || !medicalRequest.getVictim_email().isBlank())
                     medicalRequests.add(medicalRequest);
@@ -258,15 +274,18 @@ public class HospitalService {
             while(r.next())
             {
                 MedicalRequest medicalRequest = new MedicalRequest();
-                medicalRequest.setRequest_Id((!r.getString("Request_Id").isBlank() || r.getString("Request_Id").isEmpty()) ? 
+                medicalRequest.setRequest_Id((!r.getString("Request_Id").isBlank() || !r.getString("Request_Id").isEmpty()) ? 
                         r.getString("Request_Id") : null);
-                medicalRequest.setVictim_email((!r.getString("Victim_email").isBlank() || r.getString("Victim_email").isEmpty()) ? 
+                medicalRequest.setVictim_email((!r.getString("Victim_email").isBlank() || !r.getString("Victim_email").isEmpty()) ? 
                         r.getString("Victim_email") : null);
-                medicalRequest.setProblem_Description((r.getString("Crime_Description").isBlank() || r.getString("Crime_Description").isEmpty()) ? 
+                medicalRequest.setProblem_Description((!r.getString("Crime_Description").isBlank() || !r.getString("Crime_Description").isEmpty()) ? 
                         r.getString("Crime_Description") : null);
-                medicalRequest.setStatus((r.getString("Status").isBlank() || r.getString("Status").isEmpty()) ?
+                medicalRequest.setAssigned_To((!r.getString("Assigned_To").isBlank() || !r.getString("Assigned_To").isEmpty()) ? 
+                        r.getString("Assigned_To") : null);
+                medicalRequest.setStatus((!r.getString("Status").isBlank() || !r.getString("Status").isEmpty()) ?
                         r.getString("Status") : null);
-                
+                medicalRequest.setNotes(r.getString("Notes") != null ?
+                        r.getString("Notes") : null);
                 if(!medicalRequest.getVictim_email().isEmpty() || !medicalRequest.getVictim_email().isBlank())
                     medicalRequests.add(medicalRequest);
             }
@@ -311,15 +330,18 @@ public class HospitalService {
             while(r.next())
             {
                 MedicalRequest medicalRequest = new MedicalRequest();
-                medicalRequest.setRequest_Id((!r.getString("Request_Id").isBlank() || r.getString("Request_Id").isEmpty()) ? 
+                medicalRequest.setRequest_Id((!r.getString("Request_Id").isBlank() || !r.getString("Request_Id").isEmpty()) ? 
                         r.getString("Request_Id") : null);
-                medicalRequest.setVictim_email((!r.getString("Victim_email").isBlank() || r.getString("Victim_email").isEmpty()) ? 
+                medicalRequest.setVictim_email((!r.getString("Victim_email").isBlank() || !r.getString("Victim_email").isEmpty()) ? 
                         r.getString("Victim_email") : null);
-                medicalRequest.setProblem_Description((r.getString("Crime_Description").isBlank() || r.getString("Crime_Description").isEmpty()) ? 
+                medicalRequest.setProblem_Description((!r.getString("Crime_Description").isBlank() || !r.getString("Crime_Description").isEmpty()) ? 
                         r.getString("Crime_Description") : null);
-                medicalRequest.setStatus((r.getString("Status").isBlank() || r.getString("Status").isEmpty()) ?
+                medicalRequest.setAssigned_To(r.getString("Test_Assigne") != null ? 
+                        r.getString("Test_Assigne") : null);
+                medicalRequest.setStatus((!r.getString("Status").isBlank() || !r.getString("Status").isEmpty()) ?
                         r.getString("Status") : null);
-                
+                medicalRequest.setNotes(r.getString("Notes") != null ?
+                        r.getString("Notes") : null);
                 if(!medicalRequest.getVictim_email().isEmpty() || !medicalRequest.getVictim_email().isBlank())
                     medicalRequests.add(medicalRequest);
             }
@@ -600,8 +622,9 @@ public class HospitalService {
         }
         try{
             PreparedStatement s = con.prepareStatement(query);
-            s.setString(1, rejectReason);
-            s.setString(2,requestId);
+            s.setString(1, String.valueOf(Constants.Status.REJECTED));
+            s.setString(2, rejectReason);
+            s.setString(3,requestId);
             //System.out.println("-------------Updating Request Status in " + Constants.medicalTableName + "------------");
             Integer r = s.executeUpdate();
             //System.out.println("-------------Query Executed------------");
@@ -755,7 +778,7 @@ public class HospitalService {
         }
         if(operation.equals(String.valueOf(Constants.CommonOperations.REJECT)))
         {
-            return "UPDATE " + Constants.medicalTableName + " SET Status=REJECTED, Notes=? WHERE Request_Id=?";
+            return "UPDATE " + Constants.medicalTableName + " SET Status=?, Notes=? WHERE Request_Id=?";
         }
         if(operation.equals(String.valueOf(Constants.HospitalOperations.ASSIGN_TO_INVESTIGATION)))
         {

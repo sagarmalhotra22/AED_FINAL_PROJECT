@@ -4,6 +4,7 @@
  */
 package Service;
 
+import Interface.SendEmail;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
@@ -34,6 +35,10 @@ public class VictimRegistration {
                         stmt.setString(6,victim.getSecurity_question());
                         stmt.executeQuery();
         JOptionPane.showMessageDialog( null, victim.getName()+ " Registered Sucessfully");
+        
+            SendEmail obmail= new SendEmail(victim.getEmail(), "Hi, You have been successfully registered");
+            //TwilioSetup tSet = new TwilioSetup();
+            //tSet.sendMsg(String.valueOf(victim.getContact()));
 	System.out.println("-------------Registeration Successful------------------");
         stmt.close();
 	con.close();

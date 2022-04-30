@@ -78,6 +78,9 @@ public class Login {
                                     ResultSet rset=stmt.executeQuery();
 
                     System.out.println("query executed");
+                   // if(!rset.next()){
+                     //   JOptionPane.showMessageDialog(null, "Wrong Email");
+                    //}
                     while(rset.next()){
                         System.out.println("!@#$%^&*Admin12345678");
                              pass =rset.getString("password");
@@ -95,6 +98,7 @@ public class Login {
                         System.out.println(role);
                     Counter = role; 
                     }
+                    
 
                     stmt.close();
                     con.close();

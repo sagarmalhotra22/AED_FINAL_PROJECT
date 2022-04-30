@@ -1,4 +1,3 @@
-
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -46,15 +45,16 @@ public class InvestigationService {
             while(r.next())
             {
                 InvestigationRequest investigationRequest = new InvestigationRequest();
-                investigationRequest.setRequest_Id((!r.getString("Request_Id").isBlank() || r.getString("Request_Id").isEmpty()) ? 
+                investigationRequest.setRequest_Id((!r.getString("Request_Id").isBlank() || !r.getString("Request_Id").isEmpty()) ? 
                         r.getString("Request_Id") : null);
-                investigationRequest.setVictim_email((!r.getString("Victim_email").isBlank() || r.getString("Victim_email").isEmpty()) ? 
+                investigationRequest.setVictim_email((!r.getString("Victim_email").isBlank() || !r.getString("Victim_email").isEmpty()) ? 
                         r.getString("Victim_email") : null);
-                investigationRequest.setCrime_Description((r.getString("Crime_Description").isBlank() || r.getString("Crime_Description").isEmpty()) ? 
+                investigationRequest.setCrime_Description((!r.getString("Crime_Description").isBlank() || !r.getString("Crime_Description").isEmpty()) ? 
                         r.getString("Crime_Description") : null);
-                investigationRequest.setStatus((r.getString("Status").isBlank() || r.getString("Status").isEmpty()) ?
+                investigationRequest.setStatus((!r.getString("Status").isBlank() || !r.getString("Status").isEmpty()) ?
                         r.getString("Status") : null);
-                
+                 investigationRequest.setAssigned_To(r.getString("Assigned_To") != null ?
+                        r.getString("Assigned_To") : null);
                 if(!investigationRequest.getVictim_email().isEmpty() || !investigationRequest.getVictim_email().isBlank())
                     investigationRequests.add(investigationRequest);
             }
@@ -73,18 +73,28 @@ public class InvestigationService {
         System.out.println("-------------Logging In-------------");
         Connection con= DBcon.getDbcon();
         
-        String query = prepareQuery(String.valueOf(Constants.InvestigationOperations.GET_INVESTIGATION_REQUESTS), "", "");
+        String query = email.isBlank() ? 
+                prepareQuery(String.valueOf(Constants.InvestigationOperations.GET_INVESTIGATION_REQUESTS), "", "") : 
+                prepareQuery(String.valueOf(Constants.InvestigationOperations.GET_EMAIL_INVESTIGATION_REQUESTS), "", "");
         if(query.isBlank() || query.isEmpty())
             return null;
         
         try{
             PreparedStatement s = con.prepareStatement(query);
-            s.setString(1, String.valueOf(Constants.Status.ASSIGNED_TO_INVESTIGATOR));
-            s.setString(2, String.valueOf(Constants.Status.REPORT_SHARED));
+            
+            if(email.isBlank()){
+                s.setString(1, String.valueOf(Constants.Status.ASSIGNED_TO_INVESTIGATOR));
+                s.setString(2, String.valueOf(Constants.Status.REPORT_SHARED));
+            
             if(!email.isBlank() || !email.isEmpty())
                 s.setString(3, email);
             else
                 s.setString(3, "");
+            }
+            else
+            {
+                 s.setString(1, email);
+            }
             System.out.println("-------------Fetching investigation requests from " + Constants.investigationTableName + "------------");
             ResultSet r = s.executeQuery();
             System.out.println("-------------Query Executed------------");
@@ -96,13 +106,17 @@ public class InvestigationService {
             while(r.next())
             {
                 InvestigationRequest investigationRequest = new InvestigationRequest();
-                investigationRequest.setRequest_Id((!r.getString("Request_Id").isBlank() || r.getString("Request_Id").isEmpty()) ? 
+                investigationRequest.setRequest_Id((!r.getString("Request_Id").isBlank() || !r.getString("Request_Id").isEmpty()) ? 
                         r.getString("Request_Id") : null);
-                investigationRequest.setVictim_email((!r.getString("Victim_email").isBlank() || r.getString("Victim_email").isEmpty()) ? 
+                investigationRequest.setVictim_email((!r.getString("Victim_email").isBlank() || !r.getString("Victim_email").isEmpty()) ? 
                         r.getString("Victim_email") : null);
-                investigationRequest.setCrime_Description((r.getString("Crime_Description").isBlank() || r.getString("Crime_Description").isEmpty()) ? 
+                investigationRequest.setCrime_Description((!r.getString("Crime_Description").isBlank() || !r.getString("Crime_Description").isEmpty()) ? 
                         r.getString("Crime_Description") : null);
-                investigationRequest.setStatus((r.getString("Status").isBlank() || r.getString("Status").isEmpty()) ?
+                investigationRequest.setAssigned_To((!r.getString("Assigned_To").isBlank() || !r.getString("Assigned_To").isEmpty()) ? 
+                        r.getString("Assigned_To") : null);
+                investigationRequest.setDepartment((!r.getString("Department").isBlank() || !r.getString("Department").isEmpty()) ? 
+                        r.getString("Department") : null);
+                investigationRequest.setStatus((!r.getString("Status").isBlank() || !r.getString("Status").isEmpty()) ?
                         r.getString("Status") : null);
                 
                 if(!investigationRequest.getVictim_email().isEmpty() || !investigationRequest.getVictim_email().isBlank())
@@ -286,7 +300,8 @@ public class InvestigationService {
         try{
             PreparedStatement s = con.prepareStatement(query);
             s.setString(1, String.valueOf(Constants.Status.ALLOCATED_TO_HOSPITAL));
-            s.setString(2, medicalTestRequest.getRequest_Id());
+            s.setString(2, medicalTestRequest.getNotes());
+            s.setString(3, medicalTestRequest.getRequest_Id());
             /*s.setString(1, medicalTestRequest.getRequest_Id());
             s.setString(2, medicalTestRequest.getVictim_Email());
             s.setString(3, String.valueOf(Constants.Department.HOSPITAL_MANAGEMENT));
@@ -308,6 +323,37 @@ public class InvestigationService {
         }
         return null;
     }
+    public Boolean rejectCase(String requestId, String rejectReason)
+    {
+    
+        DBConnection DBcon = new DBConnection();
+        Connection con= DBcon.getDbcon();
+        String query = prepareQuery(String.valueOf(Constants.CommonOperations.REJECT), "", "");
+        if(query.isBlank() || query.isEmpty())
+        {
+            return null;
+        }
+        try{
+            PreparedStatement s = con.prepareStatement(query);
+            s.setString(1, String.valueOf(Constants.Status.REJECTED));
+            s.setString(2, rejectReason);
+            s.setString(3,requestId);
+            //System.out.println("-------------Updating Request Status in " + Constants.medicalTableName + "------------");
+            Integer r = s.executeUpdate();
+            //System.out.println("-------------Query Executed------------");
+            if(r==null)
+            {
+                JOptionPane.showMessageDialog( null, "Some error occured. Status update unsucccessfull. Please try after sometime.");
+            }
+            return true;
+        }
+        catch (SQLException e1)
+        {
+            JOptionPane.showMessageDialog( null, "Some error occured. Status update unsucccessfull. Please try after sometime.");
+        }
+        return null;
+    }
+    
     
     
     private String prepareQuery(String operation, String role, String email)
@@ -319,6 +365,10 @@ public class InvestigationService {
         if(operation.equals(String.valueOf(Constants.InvestigationOperations.GET_INVESTIGATION_REQUESTS)))
         {
             return "SELECT * FROM " + Constants.investigationTableName + " WHERE Status=? OR Status=? OR Assigned_To=?";
+        }
+        if(operation.equals(String.valueOf(Constants.InvestigationOperations.GET_EMAIL_INVESTIGATION_REQUESTS)))
+        {
+            return "SELECT * FROM " + Constants.investigationTableName + " WHERE Assigned_To=?";
         }
         if(operation.equals(String.valueOf(Constants.InvestigationOperations.ASSIGN_TO_INVESTIGATION)))
         {
@@ -355,7 +405,7 @@ public class InvestigationService {
         }
         if(operation.equals(String.valueOf(Constants.InvestigationOperations.ASSIGN_TO_HOSPITAL)))
         {
-            return "UPDATE " + Constants.investigationTableName + " SET Status=? WHERE Request_Id=?";
+            return "UPDATE " + Constants.investigationTableName + " SET Status=?, Notes=? WHERE Request_Id=?";
             //return "INSERT INTO " + Constants.medicalTestsTableName + "(REQUEST_ID,VICTIM_EMAIL,DEPARTMENT,ASSIGNED_TO,STATUS,NOTES,REQUEST_DATE,UPDATE_DATE) VALUES(?,?,?,?,?,?,?,?)";
         }
         return null;

@@ -1,4 +1,3 @@
-
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -127,13 +126,16 @@ public class LawService {
             while(r.next())
             {
                 InvestigationRequest investigationRequest = new InvestigationRequest();
-                investigationRequest.setRequest_Id((!r.getString("Request_Id").isBlank() || r.getString("Request_Id").isEmpty()) ? 
+                investigationRequest.setRequest_Id((!r.getString("Request_Id").isBlank() || !r.getString("Request_Id").isEmpty()) ? 
                         r.getString("Request_Id") : null);
-                investigationRequest.setVictim_email((!r.getString("Victim_email").isBlank() || r.getString("Victim_email").isEmpty()) ? 
+                investigationRequest.setVictim_email((!r.getString("Victim_email").isBlank() || !r.getString("Victim_email").isEmpty()) ? 
                         r.getString("Victim_email") : null);
-                investigationRequest.setCrime_Description((r.getString("Crime_Description").isBlank() || r.getString("Crime_Description").isEmpty()) ? 
+                investigationRequest.setCrime_Description((!r.getString("Crime_Description").isBlank() || !r.getString("Crime_Description").isEmpty()) ? 
                         r.getString("Crime_Description") : null);
-                investigationRequest.setStatus((r.getString("Status").isBlank() || r.getString("Status").isEmpty()) ?
+                investigationRequest.setNotes(r.getString("Notes")!=null ?
+                        r.getString("Notes") : null);
+                
+                investigationRequest.setStatus((!r.getString("Status").isBlank() || !r.getString("Status").isEmpty()) ?
                         r.getString("Status") : null);
                 
                 if(!investigationRequest.getVictim_email().isEmpty() || !investigationRequest.getVictim_email().isBlank())

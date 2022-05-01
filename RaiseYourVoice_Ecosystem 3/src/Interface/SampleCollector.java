@@ -23,12 +23,15 @@ public class SampleCollector extends javax.swing.JFrame {
      */
     public String email;
    public String pass;
-
+//    public SampleCollector() {
+//        initComponents();
+//    }
 
     SampleCollector(String email, String password) {
 initComponents();
         this.email= email;
             this.pass= password;
+            jTextField1.setText("Hi "+ this.email);
             populateTable();
 //   throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
@@ -117,7 +120,7 @@ initComponents();
                 {null, null, null, null, null}
             },
             new String [] {
-                "Patient Name", "Title 2", "Title 3", "Title 4", "null"
+                "Request ID", "Patient Email", "Case Description", "Assigned To", "Status"
             }
         ) {
             boolean[] canEdit = new boolean [] {
@@ -134,7 +137,7 @@ initComponents();
 
         btnTestDept.setBackground(new java.awt.Color(255, 153, 51));
         btnTestDept.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        btnTestDept.setText("Collect Sample");
+        btnTestDept.setText("Sample Collected");
         btnTestDept.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnTestDeptActionPerformed(evt);
@@ -183,7 +186,7 @@ initComponents();
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        jLabel1.setText("Patient Name:");
+        jLabel1.setText("Patient Email:");
         jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(890, 310, 140, 50));
 
         TFAssDept.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
@@ -218,6 +221,7 @@ initComponents();
     private void lblCloseAdminMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblCloseAdminMouseClicked
         // TODO add your handling code here:
         this.dispose();
+        new HomePage().setVisible(true);
     }//GEN-LAST:event_lblCloseAdminMouseClicked
 
     private void TFReqIdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TFReqIdActionPerformed
@@ -225,7 +229,17 @@ initComponents();
     }//GEN-LAST:event_TFReqIdActionPerformed
 
     private void btnTestDept1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTestDept1ActionPerformed
-        // TODO add your handling code here:
+        DefaultTableModel model = (DefaultTableModel) tblDetails.getModel();
+        int selectedRowIndex = tblDetails.getSelectedRow();
+        
+        if(selectedRowIndex < 0 ){
+            JOptionPane.showMessageDialog(this, "Please select a row to view");
+            return;
+        }
+        String requestId = String.valueOf(model.getValueAt(selectedRowIndex, 0));
+        String email = String.valueOf(model.getValueAt(selectedRowIndex, 1));
+        TFReqId.setText(requestId);
+        TFAssDept.setText(email);
     }//GEN-LAST:event_btnTestDept1ActionPerformed
 
     private void btnTestDeptActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTestDeptActionPerformed
@@ -240,10 +254,11 @@ initComponents();
         }
         
         String requestId = String.valueOf(model.getValueAt(selectedRowIndex, 0));
-          Boolean reponse  =hospitalService.assignRequestToAssistant(requestId, email);
+        Boolean reponse  =hospitalService.assignRequestToAssistant(requestId, email);
       
             if(reponse != null)
-                JOptionPane.showMessageDialog(this, "Successfully Assigned to Assistant!");
+                JOptionPane.showMessageDialog(this, "Sample Successfully collected and contact lab assisstant for reports!");
+            populateTable();
             return;
         
         
@@ -327,7 +342,7 @@ initComponents();
             Object[] row = new Object[11];
             row[0] = r.getRequest_Id();
             row[1] = r.getVictim_email();
-            row[2] = r.getDepartment();
+            row[2] = r.getProblem_Description();
             row[3] = r.getAssigned_To();
             row[4] = r.getStatus();
             
@@ -337,4 +352,3 @@ initComponents();
         //throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     
 }
-

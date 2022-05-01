@@ -11,6 +11,7 @@ import Service.MedicalRequest;
 import Service.RequestInvestigation;
 import Service.RequestMedical;
 import java.beans.Statement;
+import java.io.File;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -109,6 +110,9 @@ public class VictimReporting extends javax.swing.JFrame {
         tblMedical = new javax.swing.JScrollPane();
         jMedicalTable = new javax.swing.JTable();
         btnProvideConsent = new javax.swing.JButton();
+        btnProvideConsent1 = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(255, 255, 255));
@@ -317,43 +321,44 @@ public class VictimReporting extends javax.swing.JFrame {
 
         jInvestigationTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null}
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4", "Title 5"
+                "Request Id", "Victim Email", "Department", "Status"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false
+                false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
             }
         });
+        jInvestigationTable.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jInvestigationTableMouseClicked(evt);
+            }
+        });
         tblInvestigation.setViewportView(jInvestigationTable);
-        if (jInvestigationTable.getColumnModel().getColumnCount() > 0) {
-            jInvestigationTable.getColumnModel().getColumn(1).setResizable(false);
-            jInvestigationTable.getColumnModel().getColumn(2).setResizable(false);
-        }
 
-        pnlTabPaneStatus.add(tblInvestigation, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 50, -1, 290));
+        pnlTabPaneStatus.add(tblInvestigation, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 110, -1, 290));
 
         jMedicalTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -376,7 +381,7 @@ public class VictimReporting extends javax.swing.JFrame {
                 {null, null, null, null, null}
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4", "Title 5"
+                "Request Id", "Victim Email", "Department", "Assigned To", "Status"
             }
         ) {
             boolean[] canEdit = new boolean [] {
@@ -388,18 +393,11 @@ public class VictimReporting extends javax.swing.JFrame {
             }
         });
         tblMedical.setViewportView(jMedicalTable);
-        if (jMedicalTable.getColumnModel().getColumnCount() > 0) {
-            jMedicalTable.getColumnModel().getColumn(0).setResizable(false);
-            jMedicalTable.getColumnModel().getColumn(1).setResizable(false);
-            jMedicalTable.getColumnModel().getColumn(2).setResizable(false);
-            jMedicalTable.getColumnModel().getColumn(3).setResizable(false);
-            jMedicalTable.getColumnModel().getColumn(4).setResizable(false);
-        }
 
-        pnlTabPaneStatus.add(tblMedical, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 50, -1, 290));
+        pnlTabPaneStatus.add(tblMedical, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 110, 520, 290));
 
         btnProvideConsent.setBackground(new java.awt.Color(255, 153, 51));
-        btnProvideConsent.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        btnProvideConsent.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         btnProvideConsent.setText("Provide Consent");
         btnProvideConsent.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
         btnProvideConsent.addActionListener(new java.awt.event.ActionListener() {
@@ -407,7 +405,26 @@ public class VictimReporting extends javax.swing.JFrame {
                 btnProvideConsentActionPerformed(evt);
             }
         });
-        pnlTabPaneStatus.add(btnProvideConsent, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 400, 170, 38));
+        pnlTabPaneStatus.add(btnProvideConsent, new org.netbeans.lib.awtextra.AbsoluteConstraints(890, 500, 170, 38));
+
+        btnProvideConsent1.setBackground(new java.awt.Color(255, 153, 51));
+        btnProvideConsent1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        btnProvideConsent1.setText("Deny Consent");
+        btnProvideConsent1.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        btnProvideConsent1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnProvideConsent1ActionPerformed(evt);
+            }
+        });
+        pnlTabPaneStatus.add(btnProvideConsent1, new org.netbeans.lib.awtextra.AbsoluteConstraints(680, 500, 170, 38));
+
+        jLabel1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel1.setText("Investigation Requests");
+        pnlTabPaneStatus.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 60, 170, 30));
+
+        jLabel4.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel4.setText("Medical Requests");
+        pnlTabPaneStatus.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 53, 170, 30));
 
         jTabbedPane.addTab("tab4", pnlTabPaneStatus);
 
@@ -456,7 +473,7 @@ public class VictimReporting extends javax.swing.JFrame {
         
         try{
             PreparedStatement s = con.prepareStatement(query);
-            s.setString(1, consent);
+            s.setString(1, consent.equals("CONSENT_PROVIDED") ? "ASSIGNED_TO_LAWYER" : "CASE_CLOSED");
             s.setString(2, requestId);
             System.out.println("-------------Updating Request Status in " + Constants.investigationTableName + "------------");
             Integer r = s.executeUpdate();
@@ -500,7 +517,7 @@ public class VictimReporting extends javax.swing.JFrame {
                     invRequest.setCrime_Location(TFCrimeLoc.getText());
                     invRequest.setCrime_Date(String.valueOf(jDateChooser1.getDate()));
                     invRequest.setCulprit_Image(String.valueOf(jFileChooser1.getName()));
-                    invRequest.setDepartment("Head Department");
+                    invRequest.setDepartment("INVESTIGATION HEAD DEPARTMENT");
                     invRequest.setAssigned_To(" ");
                     invRequest.setStatus("Submitted");
                     invRequest.setRequest_Date("5/2/2022");
@@ -519,16 +536,23 @@ public class VictimReporting extends javax.swing.JFrame {
           
             JOptionPane.showMessageDialog(this,e.getMessage());
         } 
+            
+            TFCulpritName.setText("");
+            jTextArea1.setText("");
+            TFCrimeLoc.setText("");
+            jDateChooser1.setDateFormatString("");
+            jFileChooser1.setSelectedFile(new File(""));
+               jTabbedPane.setSelectedIndex(0);
     }//GEN-LAST:event_btnSubmitActionPerformed
 
     private void btnSubmitMedicalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSubmitMedicalActionPerformed
-        // TODO add your handling code here:
-            try
+
+        try
         {   
-          
-            if(jTextArea2.getText().isEmpty()){
-                     throw new Exception("Add problem description"); 
-             }
+            if(jTextArea2.getText().isEmpty())
+            {
+                throw new Exception("Add problem description");
+            }
             else if(String.valueOf(CBService.getSelectedItem())=="Select")
             {
                  throw new Exception("Select service"); 
@@ -536,20 +560,22 @@ public class VictimReporting extends javax.swing.JFrame {
             else if(String.valueOf(CBGender.getSelectedItem())=="Select"){
                      throw new Exception("Select gender"); 
              }
-            else if(TFAge.getText().isEmpty()){
+            else if(TFAge.getText().isEmpty())
+            {
                      throw new Exception("Add age"); 
              }
-            else{  medReq = new MedicalRequest(); 
-                    medReq.setVictim_email(vicEmail);
-                    medReq.setProblem_Description(jTextArea2.getText());
-                    medReq.setService(String.valueOf(CBService.getSelectedItem()));
-                     medReq.setGender(String.valueOf(CBGender.getSelectedItem()));
-                  medReq.setDepartment(" ");
-                    medReq.setAssigned_To(" ");
-                    medReq.setStatus("Submitted");
-                    medReq.setRequest_Date("5/2/2022");
-                    medReq.setNotes(" ");
-                    medReq.setUpdate_Date(" ");
+            else{  
+                medReq = new MedicalRequest(); 
+                medReq.setVictim_email(vicEmail);
+                medReq.setProblem_Description(jTextArea2.getText());
+                medReq.setService(String.valueOf(CBService.getSelectedItem()));
+                medReq.setGender(String.valueOf(CBGender.getSelectedItem()));
+                medReq.setDepartment("HOSPITAL MANAGEMENT");
+                medReq.setAssigned_To(" ");
+                medReq.setStatus("Submitted");
+                medReq.setRequest_Date("5/2/2022");
+                medReq.setNotes(" ");
+                medReq.setUpdate_Date(" ");
                 reqMed = new RequestMedical(medReq);
                 
                    // JOptionPane.showMessageDialog(null,"Request raised");
@@ -563,6 +589,12 @@ public class VictimReporting extends javax.swing.JFrame {
           e.printStackTrace();
             JOptionPane.showMessageDialog(this,e.getMessage());
         } 
+        
+               jTextArea2.setText("");
+               CBService.setSelectedIndex(0);
+               CBGender.setSelectedIndex(0);
+                TFAge.setText("");
+                 jTabbedPane.setSelectedIndex(0);
     }//GEN-LAST:event_btnSubmitMedicalActionPerformed
 
     private void btnInvestigationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInvestigationActionPerformed
@@ -572,9 +604,11 @@ public class VictimReporting extends javax.swing.JFrame {
 
     private void btnStatusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnStatusActionPerformed
         // TODO add your handling code here:
-         populateMedicalTable();
-         populateInvestigatioTable();
-           jTabbedPane.setSelectedIndex(3);
+        populateMedicalTable();
+        populateInvestigatioTable();
+        btnProvideConsent.setVisible(false);
+        btnProvideConsent1.setVisible(false);
+        jTabbedPane.setSelectedIndex(3);
        
     }//GEN-LAST:event_btnStatusActionPerformed
 
@@ -585,11 +619,13 @@ public class VictimReporting extends javax.swing.JFrame {
     private void lblCloseLogin1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblCloseLogin1MouseClicked
         // TODO add your handling code here:
         this.dispose();
+        new HomePage().setVisible(true);
     }//GEN-LAST:event_lblCloseLogin1MouseClicked
 
     private void lblLogoutMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblLogoutMouseClicked
         // TODO add your handling code here:
         JOptionPane.showMessageDialog(null,"Successfully Logout");
+        this.dispose();
         new HomePage().setVisible(true);
     }//GEN-LAST:event_lblLogoutMouseClicked
 
@@ -612,8 +648,51 @@ public class VictimReporting extends javax.swing.JFrame {
         if(response != false)
         {
             JOptionPane.showMessageDialog(null, "Successfully provided consent");
+            populateInvestigatioTable();
+            return;
         }
+        JOptionPane.showMessageDialog(null, "Something went wrong. Please try later");
     }//GEN-LAST:event_btnProvideConsentActionPerformed
+
+    private void btnProvideConsent1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProvideConsent1ActionPerformed
+
+        DefaultTableModel model = (DefaultTableModel) jInvestigationTable.getModel();
+        int selectedRowIndex = jInvestigationTable.getSelectedRow();
+        
+        if(selectedRowIndex < 0 ){
+            JOptionPane.showMessageDialog(this, "Please select a row to view");
+            return;
+        }
+        String requestId = String.valueOf(model.getValueAt(selectedRowIndex, 0));
+        Boolean response = victimConsent(requestId, "CONSENT_DENIED");
+        if(response != false)
+        {
+            JOptionPane.showMessageDialog(null, "Successfully provided consent");
+            populateInvestigatioTable();
+            return;
+        }
+        JOptionPane.showMessageDialog(null, "Something went wrong. Please try later");    }//GEN-LAST:event_btnProvideConsent1ActionPerformed
+
+    private void jInvestigationTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jInvestigationTableMouseClicked
+        DefaultTableModel model = (DefaultTableModel) jInvestigationTable.getModel();
+        int selectedRowIndex = jInvestigationTable.getSelectedRow();
+        
+        if(selectedRowIndex < 0 ){
+            JOptionPane.showMessageDialog(this, "Please select a row to view");
+            return;
+        }
+        String status = String.valueOf(model.getValueAt(selectedRowIndex, 3));
+        if(status.equalsIgnoreCase("INVESTIGATION_COMPLETE"))
+        {
+            btnProvideConsent.setVisible(true);
+            btnProvideConsent1.setVisible(true);
+        }
+        else
+        {
+            btnProvideConsent.setVisible(false);
+            btnProvideConsent1.setVisible(false);
+        }
+    }//GEN-LAST:event_jInvestigationTableMouseClicked
 
     /**
      * @param args the command line arguments
@@ -681,8 +760,8 @@ public class VictimReporting extends javax.swing.JFrame {
          row[0]= req_id;
             row[1]= email;
             row[2]= dept;
-            row[3]= assigned_to;
-            row[4]= status;
+            //row[3]= assigned_to;
+            row[3]= status;
             model.addRow(row);
         
       }    
@@ -752,6 +831,7 @@ public class VictimReporting extends javax.swing.JFrame {
     private javax.swing.JButton btnInvestigation;
     private javax.swing.JButton btnMedFacility;
     private javax.swing.JButton btnProvideConsent;
+    private javax.swing.JButton btnProvideConsent1;
     private javax.swing.JButton btnStatus;
     private javax.swing.JButton btnSubmit;
     private javax.swing.JButton btnSubmitMedical;
@@ -760,8 +840,10 @@ public class VictimReporting extends javax.swing.JFrame {
     private com.toedter.calendar.JDateChooser jDateChooser1;
     private javax.swing.JFileChooser jFileChooser1;
     private javax.swing.JTable jInvestigationTable;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JTable jMedicalTable;
     private javax.swing.JTabbedPane jTabbedPane;
     private javax.swing.JTextArea jTextArea1;

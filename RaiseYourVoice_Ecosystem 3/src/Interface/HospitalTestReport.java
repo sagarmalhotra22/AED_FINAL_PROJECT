@@ -21,11 +21,15 @@ public class HospitalTestReport extends javax.swing.JFrame {
      */
     public String email;
    public String pass;
+//    public HospitalTestReport() {
+//        initComponents();
+//    }
 
     HospitalTestReport(String email, String password) {
       initComponents();
       this.email=email;
       this.pass=password;
+      jTextField1.setText("Hi "+this.email);
       populateTable();
 
 //  throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
@@ -144,7 +148,7 @@ public class HospitalTestReport extends javax.swing.JFrame {
                 {null, null, null, null, null}
             },
             new String [] {
-                "Patient Name", "Title 2", "Title 3", "Title 4", "null"
+                "Request Id", "Patient Email", "Case Description", "Assigned To", "Status"
             }
         ) {
             boolean[] canEdit = new boolean [] {
@@ -188,6 +192,11 @@ public class HospitalTestReport extends javax.swing.JFrame {
         btnTestDept1.setBackground(new java.awt.Color(255, 153, 51));
         btnTestDept1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         btnTestDept1.setText("Select Patient");
+        btnTestDept1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnTestDept1ActionPerformed(evt);
+            }
+        });
         jPanel1.add(btnTestDept1, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 470, 230, 50));
 
         jLabel3.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
@@ -205,7 +214,7 @@ public class HospitalTestReport extends javax.swing.JFrame {
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        jLabel1.setText("Patient Name:");
+        jLabel1.setText("Patient Email:");
         jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 620, 140, 50));
 
         TFAssDept.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
@@ -246,6 +255,7 @@ public class HospitalTestReport extends javax.swing.JFrame {
     private void lblCloseAdminMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblCloseAdminMouseClicked
         // TODO add your handling code here:
         this.dispose();
+        new HomePage().setVisible(true);
     }//GEN-LAST:event_lblCloseAdminMouseClicked
 
     private void btnTestDeptActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTestDeptActionPerformed
@@ -263,11 +273,30 @@ public class HospitalTestReport extends javax.swing.JFrame {
         Boolean reponse  = hospitalService.assignToInvestigationDepartment(requestId, testReport, email);
       
             if(reponse != null)
-                JOptionPane.showMessageDialog(this, "Successfully Assigned to Assistant!");
+                JOptionPane.showMessageDialog(this, "Successfully Assigned to Investigator!");
+            populateTable();
+            TFReqId.setText("");
+            TFAssDept.setText("");
+            jTextArea1.setText("");
             return;
         
         
     }//GEN-LAST:event_btnTestDeptActionPerformed
+
+    private void btnTestDept1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTestDept1ActionPerformed
+        DefaultTableModel model = (DefaultTableModel) tblDetails.getModel();
+        int selectedRowIndex = tblDetails.getSelectedRow();
+        
+        if(selectedRowIndex < 0 ){
+            JOptionPane.showMessageDialog(this, "Please select a row to view");
+            return;
+        }
+        String requestId = String.valueOf(model.getValueAt(selectedRowIndex, 0));
+        String email = String.valueOf(model.getValueAt(selectedRowIndex, 1));
+        TFReqId.setText(requestId);
+        TFAssDept.setText(email);
+
+    }//GEN-LAST:event_btnTestDept1ActionPerformed
 
     /**
      * @param args the command line arguments

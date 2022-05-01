@@ -31,8 +31,10 @@ public class HospitalCounselor extends javax.swing.JFrame {
     HospitalCounselor(String email, String password) {
         
         initComponents();
+      
         this.Cemail = email;
         this.Cpass=password;
+        jTextField1.setText("Hi "+email);
         populateTable();
        // throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
@@ -60,6 +62,8 @@ public class HospitalCounselor extends javax.swing.JFrame {
         jTextArea1 = new javax.swing.JTextArea();
         btnTestDept1 = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        TFReqId = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
@@ -113,7 +117,7 @@ public class HospitalCounselor extends javax.swing.JFrame {
                 {null, null, null, null, null}
             },
             new String [] {
-                "Patient Name", "Title 2", "Title 3", "Title 4", "null"
+                "Request_Id", "Victim_Email", "Case_Desc", "Assigned_To", "Status"
             }
         ) {
             boolean[] canEdit = new boolean [] {
@@ -170,12 +174,26 @@ public class HospitalCounselor extends javax.swing.JFrame {
         btnTestDept1.setBackground(new java.awt.Color(255, 153, 51));
         btnTestDept1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         btnTestDept1.setText("Take Session");
+        btnTestDept1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnTestDept1ActionPerformed(evt);
+            }
+        });
         jPanel1.add(btnTestDept1, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 490, 230, 50));
 
         jLabel3.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
         jLabel3.setText("Counseling Notes:");
         jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 500, 170, 20));
+
+        jLabel4.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        jLabel4.setText("Request Id:");
+        jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 630, 110, 50));
+
+        TFReqId.setEditable(false);
+        TFReqId.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jPanel1.add(TFReqId, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 640, 170, 40));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -201,6 +219,7 @@ public class HospitalCounselor extends javax.swing.JFrame {
     private void lblCloseAdminMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblCloseAdminMouseClicked
         // TODO add your handling code here:
         this.dispose();
+        new HomePage().setVisible(true);
     }//GEN-LAST:event_lblCloseAdminMouseClicked
 
     private void btnTestDeptActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTestDeptActionPerformed
@@ -213,15 +232,48 @@ public class HospitalCounselor extends javax.swing.JFrame {
             return;
         }
         
-        String requestId = String.valueOf(model.getValueAt(selectedRowIndex, 0));
-        
+        String requestId = TFReqId.getText();
+        if(requestId.equals(null))
+        {
+            JOptionPane.showMessageDialog(null, "Please select a valid case");
+            return;
+        }
         String notes = jTextArea1.getText();
         HospitalService hospitalService = new HospitalService();
         hospitalService.closeCounsellingRequest(requestId, notes, Cemail);
-        
-        
+         JOptionPane.showMessageDialog(null,"Successfully Completed Counseling");
+        populateTable();
+        jTextArea1.setText("");
+        TFReqId.setEditable(true);
+        TFReqId.setText("");
+        TFReqId.setEditable(false);
         
     }//GEN-LAST:event_btnTestDeptActionPerformed
+
+    private void btnTestDept1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTestDept1ActionPerformed
+        
+        DefaultTableModel model = (DefaultTableModel) tblDetails.getModel();
+        int selectedRowIndex = tblDetails.getSelectedRow();
+        
+        if(selectedRowIndex < 0 ){
+            JOptionPane.showMessageDialog(this, "Please select a row to view");
+            return;
+        }
+        
+        String requestId = String.valueOf(model.getValueAt(selectedRowIndex, 0));
+        String status = String.valueOf(model.getValueAt(selectedRowIndex, 4));
+        if(!status.equals("COMPLETE"))
+        {
+            TFReqId.setText(requestId);
+        }
+        else
+        {
+            JOptionPane.showMessageDialog(this, "Please select a valid case!");
+            TFReqId.setText(null);
+            return;
+        }
+        
+            }//GEN-LAST:event_btnTestDept1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -259,11 +311,13 @@ public class HospitalCounselor extends javax.swing.JFrame {
 //    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTextField TFReqId;
     private javax.swing.JButton btnTestDept;
     private javax.swing.JButton btnTestDept1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
@@ -299,7 +353,7 @@ public class HospitalCounselor extends javax.swing.JFrame {
             Object[] row = new Object[11];
             row[0] = r.getRequest_Id();
             row[1] = r.getVictim_email();
-            row[2] = r.getDepartment();
+            row[2] = r.getProblem_Description();
             row[3] = r.getAssigned_To();
             row[4] = r.getStatus();
             

@@ -95,7 +95,7 @@ public class PoliceAdmin extends javax.swing.JFrame {
                 {null, null, null, null, null, null}
             },
             new String [] {
-                "Patient Name", "Title 2", "Title 3", "Title 4", "null", "null"
+                "Request_Id", "Victim_Email", "Case_Desc", "Assigned_To", "Department", "Status"
             }
         ) {
             boolean[] canEdit = new boolean [] {

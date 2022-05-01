@@ -182,7 +182,13 @@ class MainLoginForm extends javax.swing.JFrame {
             
             else{  login = new Login();
                     Counter =  login.UserLogin(txtFEmail.getText(), String.valueOf(passFLogin.getPassword()),jComboBox1.getSelectedItem().toString());
-                    System.out.println("Admin12345678");
+                    System.out.println(Counter);
+                    
+                      if(Counter==null){
+                          
+                          //JOptionPane.showMessageDialog(null,"Please enter valid credentials");
+                          //return;
+                      }
                       if(Counter.equalsIgnoreCase("Manager")){
                            email=txtFEmail.getText();
                            password= String.valueOf(passFLogin.getPassword());
@@ -240,13 +246,14 @@ class MainLoginForm extends javax.swing.JFrame {
                            password= String.valueOf(passFLogin.getPassword());
                           new JudgePortal(email,password).setVisible(true);
                    }
-                    
+                       
+                    this.dispose();
 
         }}
           catch(Exception e)
         {
-            e.printStackTrace();
-            JOptionPane.showMessageDialog(this,e.getMessage());
+            //e.printStackTrace();
+            JOptionPane.showMessageDialog(null,"Please enter valid credentials");
         } 
           
     }//GEN-LAST:event_btnLoginActionPerformed
@@ -255,6 +262,7 @@ class MainLoginForm extends javax.swing.JFrame {
         // TODO add your handling code here:
         //System.exit(0);
         this.dispose();
+        new HomePage().setVisible(true);
     }//GEN-LAST:event_lblCloseLoginMouseClicked
 
     private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed

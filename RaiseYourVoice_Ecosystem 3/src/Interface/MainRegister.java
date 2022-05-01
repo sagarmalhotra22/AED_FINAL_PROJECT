@@ -91,6 +91,7 @@ public class MainRegister extends javax.swing.JFrame {
         jButton1.setText("jButton1");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setUndecorated(true);
 
         pnlMainReg.setBackground(new java.awt.Color(255, 255, 255));
         pnlMainReg.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -129,7 +130,7 @@ public class MainRegister extends javax.swing.JFrame {
         });
         pnlLeftReg.add(btnBack, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 100, 40));
 
-        pnlMainReg.add(pnlLeftReg, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 290, 850));
+        pnlMainReg.add(pnlLeftReg, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 290, 910));
 
         pnlTopReg.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -160,25 +161,10 @@ public class MainRegister extends javax.swing.JFrame {
         jTabbedPane1.setTabLayoutPolicy(javax.swing.JTabbedPane.SCROLL_TAB_LAYOUT);
 
         pnlTabFirst.setBackground(new java.awt.Color(255, 255, 255));
+        pnlTabFirst.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel14.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Interface/Images/voice7.jpg"))); // NOI18N
-
-        javax.swing.GroupLayout pnlTabFirstLayout = new javax.swing.GroupLayout(pnlTabFirst);
-        pnlTabFirst.setLayout(pnlTabFirstLayout);
-        pnlTabFirstLayout.setHorizontalGroup(
-            pnlTabFirstLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pnlTabFirstLayout.createSequentialGroup()
-                .addGap(171, 171, 171)
-                .addComponent(jLabel14)
-                .addContainerGap(230, Short.MAX_VALUE))
-        );
-        pnlTabFirstLayout.setVerticalGroup(
-            pnlTabFirstLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pnlTabFirstLayout.createSequentialGroup()
-                .addGap(115, 115, 115)
-                .addComponent(jLabel14)
-                .addContainerGap(436, Short.MAX_VALUE))
-        );
+        pnlTabFirst.add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 110, 270, 200));
 
         jTabbedPane1.addTab("", pnlTabFirst);
 
@@ -263,7 +249,7 @@ public class MainRegister extends javax.swing.JFrame {
         pnlTabVictimReg.add(objTFPetName2);
         objTFPetName2.setBounds(370, 340, 224, 35);
 
-        CBTabVictimCity.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Select", "Boston", "" }));
+        CBTabVictimCity.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Select", "Boston", "Chicago", " " }));
         pnlTabVictimReg.add(CBTabVictimCity);
         CBTabVictimCity.setBounds(370, 280, 224, 35);
 
@@ -301,7 +287,7 @@ public class MainRegister extends javax.swing.JFrame {
         jLabel11.setText("Enterprise:");
         pnlTabStaffReg.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 340, 102, 35));
 
-        CBTabStaffCity.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Select", "Boston" }));
+        CBTabStaffCity.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Select", "Boston", "Chicago" }));
         pnlTabStaffReg.add(CBTabStaffCity, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 290, 224, 35));
 
         jLabel13.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
@@ -385,10 +371,10 @@ public class MainRegister extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(pnlMainReg, javax.swing.GroupLayout.DEFAULT_SIZE, 906, Short.MAX_VALUE)
+            .addComponent(pnlMainReg, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
-        setSize(new java.awt.Dimension(1537, 943));
+        setSize(new java.awt.Dimension(1523, 906));
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
@@ -517,6 +503,7 @@ public class MainRegister extends javax.swing.JFrame {
     private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
         // TODO add your handling code here:
         this.dispose();
+        new HomePage().setVisible(true);
     }//GEN-LAST:event_btnBackActionPerformed
 
     private void btnTabVicRegActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTabVicRegActionPerformed
@@ -680,7 +667,37 @@ public class MainRegister extends javax.swing.JFrame {
     /**
      * @param args the command line arguments
      */
-
+//    public static void main(String args[]) {
+//        /* Set the Nimbus look and feel */
+//        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+//        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+//         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+//         */
+//        try {
+//            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+//                if ("Nimbus".equals(info.getName())) {
+//                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+//                    break;
+//                }
+//            }
+//        } catch (ClassNotFoundException ex) {
+//            java.util.logging.Logger.getLogger(MainRegister.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+//        } catch (InstantiationException ex) {
+//            java.util.logging.Logger.getLogger(MainRegister.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+//        } catch (IllegalAccessException ex) {
+//            java.util.logging.Logger.getLogger(MainRegister.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+//        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+//            java.util.logging.Logger.getLogger(MainRegister.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+//        }
+//        //</editor-fold>
+//
+//        /* Create and display the form */
+//        java.awt.EventQueue.invokeLater(new Runnable() {
+//            public void run() {
+//                new MainRegister().setVisible(true);
+//            }
+//        });
+//    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox<String> CBTabStaffCity;

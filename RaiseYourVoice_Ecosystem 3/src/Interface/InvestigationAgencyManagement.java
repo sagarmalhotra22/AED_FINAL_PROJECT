@@ -32,6 +32,7 @@ public static String investigationTableName = "investigtationRequests";
         this.Semail=email;
         this.Spass = password;
   initComponents();      
+  jTextField1.setText("Hi "+email);
 //throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
@@ -56,6 +57,7 @@ public static String investigationTableName = "investigtationRequests";
         rejectCaseBtn = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         lblAdminLogout = new javax.swing.JLabel();
+        jTextField1 = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
@@ -105,35 +107,43 @@ public static String investigationTableName = "investigtationRequests";
 
         investigationAgencyDataTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null}
             },
             new String [] {
-                "Victim ID", "Victim", "Case Description", "Status"
+                "Victim ID", "Victim", "Case Description", "Status", "Assigned To"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, true, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         investigationAgencyDataTable.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 investigationAgencyDataTableMouseClicked(evt);
@@ -161,7 +171,7 @@ public static String investigationTableName = "investigtationRequests";
                 shareReportToAdminBtnActionPerformed(evt);
             }
         });
-        jPanel1.add(shareReportToAdminBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 530, 290, 50));
+        jPanel1.add(shareReportToAdminBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 650, 290, 50));
 
         rejectCaseBtn.setBackground(new java.awt.Color(68, 168, 217));
         rejectCaseBtn.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
@@ -171,7 +181,7 @@ public static String investigationTableName = "investigtationRequests";
                 rejectCaseBtnActionPerformed(evt);
             }
         });
-        jPanel1.add(rejectCaseBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 640, 230, 50));
+        jPanel1.add(rejectCaseBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 530, 270, 50));
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Interface/Images/investigate1.jpg"))); // NOI18N
         jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(1190, 80, 270, 300));
@@ -186,6 +196,12 @@ public static String investigationTableName = "investigtationRequests";
         });
         jPanel1.add(lblAdminLogout, new org.netbeans.lib.awtextra.AbsoluteConstraints(1470, 0, 70, 20));
 
+        jTextField1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jTextField1.setForeground(new java.awt.Color(0, 51, 102));
+        jTextField1.setText("Hi MAHAK!!!");
+        jTextField1.setBorder(null);
+        jPanel1.add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 150, 20));
+
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 60, 1550, 810));
 
         pack();
@@ -199,6 +215,11 @@ public static String investigationTableName = "investigtationRequests";
             JOptionPane.showMessageDialog(this, "Please select a row to view");
             return;
         }
+        String status = String.valueOf(model.getValueAt(selectedRowIndex, 3));
+        if(status.equals("INVESTIGATION_COMPLETE")|| status.equals("SHARED_WITH_MANAGEMENT"))
+            shareReportToAdminBtn.setVisible(true);
+        else
+            shareReportToAdminBtn.setVisible(false);
         /*
         
         */
@@ -220,10 +241,11 @@ public static String investigationTableName = "investigtationRequests";
         Boolean response = investigationService.assignRequestToInvestigationDepartment(requestId);
         if(response != null)
         {
-            JOptionPane.showMessageDialog(this, "Successfully Assigned to Testing Department !");
+            JOptionPane.showMessageDialog(this, "Successfully Assigned to Investigation Department !");
+            populateTable(unallocatedTableName);
             return;
         }
-        JOptionPane.showMessageDialog(this, "Invalid Department !");
+        //JOptionPane.showMessageDialog(this, "Invalid Department !");
         return;
     }//GEN-LAST:event_allotInvestigationBtnActionPerformed
 
@@ -244,6 +266,7 @@ public static String investigationTableName = "investigtationRequests";
         if(response != null)
         {
             JOptionPane.showMessageDialog(this, "Successfully Assigned to RYV !");
+            populateTable(unallocatedTableName);
             return;
         }
         JOptionPane.showMessageDialog(this, "UNSUCCESSFUL !");
@@ -252,15 +275,45 @@ public static String investigationTableName = "investigtationRequests";
     }//GEN-LAST:event_shareReportToAdminBtnActionPerformed
 
     private void rejectCaseBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rejectCaseBtnActionPerformed
-        // TODO add your handling code here:
+//enter comments to reject
+        String c = JOptionPane.showInputDialog(this, "Enter Reason for Rejection");
+        
+        InvestigationService investigationService = new InvestigationService();
+        
+        DefaultTableModel model = (DefaultTableModel) investigationAgencyDataTable.getModel();
+        int selectedRowIndex = investigationAgencyDataTable.getSelectedRow();
+        
+        if(selectedRowIndex < 0 ){
+            JOptionPane.showMessageDialog(this, "Please select a row to view");
+            return;
+        }
+        
+        int i = JOptionPane.showConfirmDialog(null, "Are you sure you want to Reject this case?");
+        // 0=yes, 1=no, 2=cancel
+        System.out.println(i);
+        
+        if(i==0)
+        {
+            String requestId = String.valueOf(model.getValueAt(selectedRowIndex, 0));
+            Boolean r = investigationService.rejectCase(requestId, c);
+            if(r)
+                JOptionPane.showMessageDialog(null, "Successfully rejected case");
+            populateTable(unallocatedTableName);
+        }
+        return;
     }//GEN-LAST:event_rejectCaseBtnActionPerformed
 
     private void allotRequestBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_allotRequestBtnActionPerformed
         populateTable(unallocatedTableName);
-        
+                allotInvestigationBtn.setVisible(true);
+        shareReportToAdminBtn.setVisible(true);
+        rejectCaseBtn.setVisible(true);
     }//GEN-LAST:event_allotRequestBtnActionPerformed
 
     private void investigationDepartmentDataBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_investigationDepartmentDataBtnActionPerformed
+        allotInvestigationBtn.setVisible(false);
+        shareReportToAdminBtn.setVisible(false);
+        rejectCaseBtn.setVisible(false);
         populateTable(investigationTableName);
     }//GEN-LAST:event_investigationDepartmentDataBtnActionPerformed
 
@@ -274,6 +327,7 @@ public static String investigationTableName = "investigtationRequests";
     private void lblCloseAdminMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblCloseAdminMouseClicked
         // TODO add your handling code here:
         this.dispose();
+        new HomePage().setVisible(true);
     }//GEN-LAST:event_lblCloseAdminMouseClicked
 
     /**
@@ -319,6 +373,7 @@ public static String investigationTableName = "investigtationRequests";
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTextField jTextField1;
     private javax.swing.JLabel lblAdminLogout;
     private javax.swing.JLabel lblCloseAdmin;
     private javax.swing.JLabel lblCreateTitle;
@@ -348,8 +403,8 @@ public static String investigationTableName = "investigtationRequests";
             row[0] = r.getRequest_Id();
             row[1] = r.getVictim_email();
             row[2] = r.getCrime_Description();
-            //row[3] = r.getCaseDescription();
-            //row[4] = r.getContact();
+            row[3] = r.getStatus();
+            row[4] = r.getAssigned_To();
             //row[5] = r.getCaseDescription();
             model.addRow(row);
         }

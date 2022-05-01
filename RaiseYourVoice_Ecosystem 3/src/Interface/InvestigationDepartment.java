@@ -32,6 +32,7 @@ public String Ipass;
     initComponents();
     this.Iemail =email;
     this.Ipass =password;
+    jTextField1.setText("Hi "+email);
     populateTable();
     }
 
@@ -48,13 +49,13 @@ public String Ipass;
         caseResportBtn = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         investigationDataTable = new javax.swing.JTable();
-        statusFilterBy = new javax.swing.JComboBox<>();
         rejectCaseBtn = new javax.swing.JButton();
         requestMedicalResults = new javax.swing.JButton();
         lblCloseAdmin = new javax.swing.JLabel();
         lblCreateTitle = new javax.swing.JLabel();
         lblAdminLogout = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
+        jTextField1 = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
@@ -110,15 +111,6 @@ public String Ipass;
 
         jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 140, 810, 365));
 
-        statusFilterBy.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        statusFilterBy.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Unsolved Cases", "Solved Cases" }));
-        statusFilterBy.addItemListener(new java.awt.event.ItemListener() {
-            public void itemStateChanged(java.awt.event.ItemEvent evt) {
-                statusFilterByItemStateChanged(evt);
-            }
-        });
-        jPanel1.add(statusFilterBy, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 90, 220, -1));
-
         rejectCaseBtn.setBackground(new java.awt.Color(68, 168, 217));
         rejectCaseBtn.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         rejectCaseBtn.setText("Reject Case");
@@ -148,7 +140,7 @@ public String Ipass;
                 lblCloseAdminMouseClicked(evt);
             }
         });
-        jPanel1.add(lblCloseAdmin, new org.netbeans.lib.awtextra.AbsoluteConstraints(1500, 0, 20, 30));
+        jPanel1.add(lblCloseAdmin, new org.netbeans.lib.awtextra.AbsoluteConstraints(1510, 0, 20, 30));
 
         lblCreateTitle.setBackground(new java.awt.Color(68, 168, 217));
         lblCreateTitle.setFont(new java.awt.Font("Tahoma", 1, 36)); // NOI18N
@@ -166,10 +158,16 @@ public String Ipass;
                 lblAdminLogoutMouseClicked(evt);
             }
         });
-        jPanel1.add(lblAdminLogout, new org.netbeans.lib.awtextra.AbsoluteConstraints(1460, 60, 70, 20));
+        jPanel1.add(lblAdminLogout, new org.netbeans.lib.awtextra.AbsoluteConstraints(1470, 60, 70, 20));
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Interface/Images/police.png"))); // NOI18N
         jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(1060, 130, 210, 280));
+
+        jTextField1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jTextField1.setForeground(new java.awt.Color(0, 51, 102));
+        jTextField1.setText("Hi MAHAK!!!");
+        jTextField1.setBorder(null);
+        jPanel1.add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 60, 150, 20));
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1550, 840));
 
@@ -200,6 +198,7 @@ public String Ipass;
         if(response == true)
         {
             JOptionPane.showMessageDialog(this, "Successfully generated test request !");
+            populateTable();
             return;
         }
         JOptionPane.showMessageDialog(this, "unsuccessful !");
@@ -226,6 +225,7 @@ public String Ipass;
         if(response != null)
         {
             JOptionPane.showMessageDialog(this, "Successfully shared reports with management !");
+            populateTable();
             return;
         }
         JOptionPane.showMessageDialog(this, "unsuccessful !");
@@ -257,25 +257,10 @@ public String Ipass;
         */        // TODO add your handling code here:
     }//GEN-LAST:event_investigationDataTableMouseClicked
 
-    private void statusFilterByItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_statusFilterByItemStateChanged
-        if(evt.getStateChange() == ItemEvent.SELECTED) 
-        {
-            String selectedItem = statusFilterBy.getSelectedItem().toString();
-            switch(selectedItem)
-            {
-                case "Unsolved Cases":
-                    populateTable();
-                    break;
-                case "Solved Cases":
-                    populateTable();
-                    break;
-            }
-        }
-    }//GEN-LAST:event_statusFilterByItemStateChanged
-
     private void lblCloseAdminMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblCloseAdminMouseClicked
         // TODO add your handling code here:
         this.dispose();
+        new HomePage().setVisible(true);
     }//GEN-LAST:event_lblCloseAdminMouseClicked
 
     private void lblAdminLogoutMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblAdminLogoutMouseClicked
@@ -326,12 +311,12 @@ public String Ipass;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTextField jTextField1;
     private javax.swing.JLabel lblAdminLogout;
     private javax.swing.JLabel lblCloseAdmin;
     private javax.swing.JLabel lblCreateTitle;
     private javax.swing.JButton rejectCaseBtn;
     private javax.swing.JButton requestMedicalResults;
-    private javax.swing.JComboBox<String> statusFilterBy;
     // End of variables declaration//GEN-END:variables
 
     private void populateTable() {
@@ -359,12 +344,11 @@ public String Ipass;
             Object[] row = new Object[11];
             row[0] = r.getRequest_Id();
             row[1] = r.getVictim_email();
-            row[2] = r.getDepartment();
-            row[3] = r.getAssigned_To();
-            row[4] = r.getStatus();
+            row[2] = r.getCrime_Description();
+            row[3] = r.getStatus();
+            //row[4] = r.getStatus();
             
             model.addRow(row);
         }
     }
 }
-

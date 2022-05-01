@@ -4,7 +4,13 @@
  */
 package Interface;
 
+import Service.DBConnection;
+import Service.LawService;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -17,12 +23,15 @@ public class LawyerPortal extends javax.swing.JFrame {
      */
     public String email;
    public String pass;
-
+//    public LawyerPortal() {
+//        initComponents();
+//    }
 
     LawyerPortal(String email, String password) {
         initComponents();
         this.email= email;
     this.pass= password;
+    jTextField1.setText("HI "+this.email);
 //throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
@@ -53,7 +62,6 @@ public class LawyerPortal extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
         TFReqId = new javax.swing.JTextField();
         jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
         lblCloseLogin1 = new javax.swing.JLabel();
 
@@ -135,46 +143,51 @@ public class LawyerPortal extends javax.swing.JFrame {
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null}
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "Request ID", "Victim Email", "Case Description", "Notes", "Status"
             }
         ));
+        jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTable1MouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(jTable1);
 
         jPanel2.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 90, 650, 480));
 
         jLabel4.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        jLabel4.setText("Request Id:");
+        jLabel4.setText("Victim Email:");
         jPanel2.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(780, 220, 100, 50));
 
         TFReqId.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
@@ -185,14 +198,14 @@ public class LawyerPortal extends javax.swing.JFrame {
         jButton2.setText("Reject");
         jPanel2.add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(1000, 330, 160, 30));
 
-        jButton3.setBackground(new java.awt.Color(255, 153, 51));
-        jButton3.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jButton3.setText("Select");
-        jPanel2.add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(870, 150, 150, 30));
-
         jButton4.setBackground(new java.awt.Color(255, 153, 51));
         jButton4.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jButton4.setText("Accept and Present");
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
         jPanel2.add(jButton4, new org.netbeans.lib.awtextra.AbsoluteConstraints(780, 330, 170, 30));
 
         lblCloseLogin1.setBackground(new java.awt.Color(68, 168, 217));
@@ -218,23 +231,60 @@ public class LawyerPortal extends javax.swing.JFrame {
     private void lblLogoutMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblLogoutMouseClicked
         // TODO add your handling code here:
         JOptionPane.showMessageDialog(null,"Successfully Logout");
+        this.dispose();
         new HomePage().setVisible(true);
     }//GEN-LAST:event_lblLogoutMouseClicked
 
     private void lblCloseLogin1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblCloseLogin1MouseClicked
         // TODO add your handling code here:
         this.dispose();
+        new HomePage().setVisible(true);
     }//GEN-LAST:event_lblCloseLogin1MouseClicked
 
     private void lblCloseLogin2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblCloseLogin2MouseClicked
         // TODO add your handling code here:
         this.dispose();
+        new HomePage().setVisible(true);
     }//GEN-LAST:event_lblCloseLogin2MouseClicked
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
         jTabbedPane1.setSelectedIndex(1);
+        populateTable();
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+        int selectedRowIndex = jTable1.getSelectedRow();
+        
+        if(selectedRowIndex < 0 ){
+            JOptionPane.showMessageDialog(this, "Please select a row to view");
+            return;
+        }
+        String requestId = String.valueOf(model.getValueAt(selectedRowIndex, 0));
+        
+        String c = JOptionPane.showInputDialog(this, "Enter Case Details");
+        LawService lawService = new LawService();
+        Boolean response = lawService.presentCase(email, c, requestId);
+        if(response == true)
+        {
+            JOptionPane.showMessageDialog(this, "successfully presented");
+        }
+        populateTable();
+        TFReqId.setText("");
+    }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
+    DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+        int selectedRowIndex = jTable1.getSelectedRow();
+        
+        if(selectedRowIndex < 0 ){
+            JOptionPane.showMessageDialog(this, "Please select a row to view");
+            return;
+        }
+        String requestId = String.valueOf(model.getValueAt(selectedRowIndex, 1));
+        TFReqId.setText(requestId);
+    }//GEN-LAST:event_jTable1MouseClicked
 
     /**
      * @param args the command line arguments
@@ -275,7 +325,6 @@ public class LawyerPortal extends javax.swing.JFrame {
     private javax.swing.JTextField TFReqId;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -294,4 +343,50 @@ public class LawyerPortal extends javax.swing.JFrame {
     private javax.swing.JLabel lblCloseLogin2;
     private javax.swing.JLabel lblLogout;
     // End of variables declaration//GEN-END:variables
+
+    private void populateTable() {
+DBConnection DBcon = new DBConnection();
+        System.out.println("-------------Logging In-------------");
+        Connection con= DBcon.getDbcon();
+        
+        try 
+  {
+      
+    PreparedStatement stmt=con.prepareStatement("Select * FROM Investigation_Request WHERE Status=?");
+                stmt.setString(1,"ASSIGNED_TO_LAWYER");
+                ResultSet rset=stmt.executeQuery();
+                System.out.println("query executed");
+              
+        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+        model.setRowCount(0);
+     Object[] row = new Object[11];
+     
+      while (rset.next()) {
+          if(rset.getString("VICTIM_EMAIL").isEmpty()){
+              System.out.println("");
+              JOptionPane.showMessageDialog(this, "NO DATA FOUND");
+          }
+          else{
+        String req_id = rset.getString("REQUEST_ID");
+        String email = rset.getString("VICTIM_EMAIL");
+        String dept = rset.getString("CRIME_DESCRIPTION");
+        String assigned_to = rset.getString("ASSIGNED_TO");
+        String status = rset.getString("STATUS");
+        String notes = rset.getString("NOTES");
+         row[0]= req_id;
+            row[1]= email;
+            row[2]= dept;
+            //row[3]= assigned_to;
+            row[3]= notes;
+            row[4] = status;
+            model.addRow(row);
+        
+      }  }                 
+                                    
+    
+    
+    } catch(Exception e) {
+              System.out.println("Exception handled");
+    }
+    }
 }

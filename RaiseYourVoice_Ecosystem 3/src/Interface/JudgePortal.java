@@ -5,7 +5,10 @@
  */
 package Interface;
 
+import Service.InvestigationRequest;
+import Service.LawService;
 import java.awt.event.ItemEvent;
+import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -20,12 +23,15 @@ public class JudgePortal extends javax.swing.JFrame {
      */
    public String email;
    public String pass;
+//    public JudgePortal() {
+//        initComponents();
+//    }
 
     JudgePortal(String email, String password) {
         initComponents();
        this.email=email;
         this.pass=password;
-        
+        populateTable();
         //throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
@@ -48,6 +54,8 @@ public class JudgePortal extends javax.swing.JFrame {
         jScrollPane2 = new javax.swing.JScrollPane();
         jTextArea1 = new javax.swing.JTextArea();
         requestMedicalResults1 = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
@@ -58,32 +66,40 @@ public class JudgePortal extends javax.swing.JFrame {
 
         investigationDataTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null}
             },
             new String [] {
-                "Case ID", "Victim Name", "Case Description", "Status"
+                "Case ID", "Victim Email", "Case Description", "Notes", "Status"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                true, false, false, false, true
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         investigationDataTable.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 investigationDataTableMouseClicked(evt);
@@ -148,6 +164,12 @@ public class JudgePortal extends javax.swing.JFrame {
         });
         jPanel1.add(requestMedicalResults1, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 560, 230, 50));
 
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Interface/Images/3bbU.gif"))); // NOI18N
+        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(1180, 110, 190, 190));
+
+        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Interface/Images/judge.jpg"))); // NOI18N
+        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(1120, 430, 410, 360));
+
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1550, 840));
 
         pack();
@@ -156,9 +178,28 @@ public class JudgePortal extends javax.swing.JFrame {
     private void requestMedicalResultsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_requestMedicalResultsActionPerformed
         
         //enter comments for requesting medical report in dialog box
-        String c = JOptionPane.showInputDialog(this, "Enter comments for Medical Report Request");
+        DefaultTableModel model = (DefaultTableModel) investigationDataTable.getModel();
+        int selectedRowIndex = investigationDataTable.getSelectedRow();
         
-        //send c to Hospital Enterprise
+        if(selectedRowIndex < 0 ){
+            JOptionPane.showMessageDialog(this, "Please select a row to view");
+            return;
+        }
+        String requestId = String.valueOf(model.getValueAt(selectedRowIndex, 0));
+        String verdict = jTextArea1.getText();
+        LawService lawService = new LawService();
+        Boolean response = lawService.passJudgement(requestId, verdict);
+        if(response == true)
+        {
+            JOptionPane.showMessageDialog(this, "Verdict sent");
+            jTextArea1.setText("");
+            populateTable();
+            String email = String.valueOf(model.getValueAt(selectedRowIndex, 1));
+            SendEmail obmail= new SendEmail(email, "Hi this is your verdict"+verdict);
+            return;
+        }
+        JOptionPane.showMessageDialog(this, "Something went wrong");
+        
     }//GEN-LAST:event_requestMedicalResultsActionPerformed
 
     private void investigationDataTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_investigationDataTableMouseClicked
@@ -181,6 +222,7 @@ public class JudgePortal extends javax.swing.JFrame {
     private void lblCloseAdminMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblCloseAdminMouseClicked
         // TODO add your handling code here:
         this.dispose();
+        new HomePage().setVisible(true);
     }//GEN-LAST:event_lblCloseAdminMouseClicked
 
     private void lblAdminLogoutMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblAdminLogoutMouseClicked
@@ -231,6 +273,8 @@ public class JudgePortal extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTable investigationDataTable;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
@@ -243,12 +287,24 @@ public class JudgePortal extends javax.swing.JFrame {
     // End of variables declaration//GEN-END:variables
 
     private void populateTable() {
+        
+        LawService lawService = new LawService();
+        ArrayList<InvestigationRequest> judgeRequests = new ArrayList<>();
+        judgeRequests = lawService.getJudgeRequests();
         DefaultTableModel model = (DefaultTableModel) investigationDataTable.getModel();
         model.setRowCount(0);
         int i = 1;
-        /*
-        call table with relelvant details
-        
-        */
+        for(InvestigationRequest r: judgeRequests)
+        {
+            Object[] row = new Object[11];
+            row[0] = r.getRequest_Id();
+            row[1] = r.getVictim_email();
+            row[2] = r.getCrime_Description();
+            row[3] = r.getNotes();
+            //row[4] = r.getNotes();
+            row[4] = r.getStatus();
+            
+            model.addRow(row);
+        }
     }
 }
